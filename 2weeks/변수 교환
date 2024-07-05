@@ -1,0 +1,20 @@
+namespace VariableChange
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            int a = Int32.Parse(Console.ReadLine());
+            int b = Int32.Parse(Console.ReadLine());
+            int temp = a;
+            Console.WriteLine($"{a}  {b}");
+
+            // 변수 교환
+            a = b;
+            b = temp;
+
+            //코딩
+            Console.WriteLine($"{a}  {b}");
+        }
+    }
+}
