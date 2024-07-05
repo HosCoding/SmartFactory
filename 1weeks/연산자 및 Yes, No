@@ -1,0 +1,43 @@
+namespace Quiz03
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            while (true)
+            {
+                Console.WriteLine("첫 번째 숫자를 입력하세요 : ");
+                int a = Int32.Parse(Console.ReadLine());
+                Console.WriteLine("연산자()를 입력하세요 : ");
+                string op = Console.ReadLine();
+
+                Console.WriteLine("두 번째 숫자를 입력하세요 : ");
+                int b = Int32.Parse(Console.ReadLine());
+
+                    if (op == "+")
+                      Console.WriteLine($"결과 값은 {a + b} 입니다.");
+                    else if (op == "-")
+                        Console.WriteLine($"결과 값은 {a - b} 입니다.");
+                    else if (op == "*")
+                     Console.WriteLine($"결과 값은 {a * b} 입니다.");
+                    else if (op == "/")
+                     Console.WriteLine($"결과 값은 {(double)a / b} 입니다.");
+
+                Console.WriteLine("계속 하시겠습니까?");
+                string word = Console.ReadLine();
+
+                if (word.ToLower() == "n")
+                {
+                    Console.WriteLine("끝내겠습니다.");
+                    break;
+                }
+                else if (word.ToLower() == "y")
+                    continue;
+                else
+                {
+                    Console.WriteLine("값을 다시 작성해주세요");
+                }
+            }
+        }
+    }
+}
