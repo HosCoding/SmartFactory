@@ -1,0 +1,43 @@
+using System.Net.Security;
+
+namespace ExamAPP01
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.Write("점수:");
+            int i = Int32.Parse(Console.ReadLine());
+            
+
+            if (100 >= i && 90 <= i)
+            {
+                Console.Write("A학점입니다.");
+            }
+
+            else if (89 >= i && 80 <= i)
+            {
+                Console.Write("B학점입니다.");
+            }
+
+            else if (79 >= i && 70 <= i)
+            {
+                Console.Write("C학점입니다.");
+            }
+
+            else if (69 >= i && 60 <= i)
+            {
+                Console.Write("D학점입니다.");
+            }
+
+            else if (100 < i)
+            {
+                Console.Write("100 이내의 값을 작성해주세요.");
+            }
+            else 
+            {
+                Console.Write("F학점입니다.");
+            };
+        }
+    }
+}
