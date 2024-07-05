@@ -1,0 +1,57 @@
+using System.Security.Cryptography.X509Certificates;
+
+namespace MethodApp01
+{
+    class MyClass
+    {
+
+        public void Print()
+        {
+            Console.WriteLine("MyClass 하윙");
+        }
+
+        public void Print(string s)
+        {
+            Console.WriteLine(s);
+        }
+
+        public void Print(string s1, double speed)
+        {
+            Console.WriteLine($"{s1}, speed : {speed}");
+        }
+
+        public void Print(double speed, string s1)
+        {
+            Console.WriteLine($"speed :{speed},  {s1}");
+        }
+
+    }                                              //end my class
+    internal class Program
+    {
+
+
+        static void Print()
+        {
+            Console.WriteLine("하이");
+        }
+
+        public static void Print(string s)
+        {
+
+            Console.WriteLine(s);
+        }
+
+        static void Main(string[] args)
+        {
+            Print();                                 //public static void Print()
+            Print("안녕하세요");                    //public static void Print(string s)
+            
+            
+            MyClass mc = new MyClass();
+            mc.Print();                             //MyClass - public void Print()
+            mc.Print("반갑습니다.");                 //MyClass - public void Print(string  s)
+            mc.Print("수고하세요.", 100);              //MyClass - public void Print(string  s1, double speed)
+            mc.Print(3.14, "어서오세요");           // //MyClass - public void Print(double speed, string  s1)
+        }
+    }
+}
