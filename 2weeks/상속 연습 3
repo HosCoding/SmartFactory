@@ -1,0 +1,72 @@
+namespace OOPApp05
+{
+    abstract class Car                  //실존 x -> 개념적으로(클래스 적으로) 존재함 -->> main 에서 new가 안됨
+    {
+        public abstract void Run();               // 추상 메소드 abstarct Method 
+
+    }
+
+    class Bus : Car
+    {
+        public override void Run() // 꼭 구현이 되야함
+        {
+            Console.WriteLine("버스가 달린다.");
+        }
+
+    }
+
+    class Taxi : Car                                 
+    {
+        public override void Run()
+        {
+            Console.WriteLine("택시가 달린다.");        //alt + enter 예외 처리
+        }
+    }
+
+    class Truck : Car
+    {
+        public override void Run()
+        {
+            Console.WriteLine("트럭이 달린다.");
+        }
+    }
+
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            //Car car = new Car(); //Car 클래스를 abstract 클래스로 만들었기 때문에 안됨
+            Bus bus = new Bus();
+            Taxi taxi = new Taxi();
+            Truck truck = new Truck();
+            bus.Run();
+            taxi.Run();
+            truck.Run();
+
+            Car car1 = new Bus();
+            Car car2 = new Taxi();
+            Car car3 = new Truck();
+            car1.Run();
+            car2.Run();
+            car3.Run();
+            ///////////////////////////////////////////////////////////////////
+            Car[] cars = new Car[3];
+            cars[0] = new Bus();
+            cars[1] = new Taxi();
+            cars[2] = new Truck();
+
+            for(int i=0; i<3; i++)
+            {
+                cars[i].Run();
+            }
+
+            Car car4 = new Bus();
+            car4.Run();
+            car4 = new Taxi();
+            car4.Run();
+            car4 = new Truck();
+            car4.Run();
+
+        }
+    }
+}
