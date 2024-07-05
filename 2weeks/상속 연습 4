@@ -1,0 +1,49 @@
+namespace OOPApp05
+{
+    abstract class Mammal
+    {
+        public abstract void Eat();
+    }
+    class Lion : Mammal
+    {
+        public override void Eat()
+        {
+            Console.WriteLine("사자가 음식을 먹습니다.");
+        }
+    }
+    class Tiger : Mammal
+    {
+        public override void Eat()
+        {
+            Console.WriteLine("호랑이가 음식을 먹습니다.");
+        }
+    }
+    class Dog : Mammal
+    {
+        public override void Eat()
+        {
+            Console.WriteLine("개가 음식을 먹습니다.");
+        }
+    }
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            /*Lion lion = new Lion();
+            Tiger tiger = new Tiger();
+            Dog dog = new Dog();
+            lion.Eat();
+            tiger.Eat();
+            dog.Eat();*/
+            Mammal[] malmmals = new Mammal[3];
+            malmmals[0] = new Lion();
+            malmmals[1] = new Tiger();
+            malmmals[2] = new Dog();
+
+            for (int i = 0; i < malmmals.Length; i++)
+            {
+                malmmals[i].Eat();
+            }
+        }
+    }
+}
