@@ -1,0 +1,67 @@
+namespace OOPApp07
+{
+    class Horse
+    {
+        public void Run()
+        {
+            Console.WriteLine("말이 달리고 있다.");
+        }
+    }
+
+    class Angel 
+    {
+        
+    }
+
+    interface IWing                   // interface --> 특수한 클래스      //Abstract 클래스에서 발전했음.     //Virtual 을 작성안해도 그렇게 되있음
+    {
+        public void Fly()                         //Abstract Method
+        {
+            Console.WriteLine("날다");
+        }          
+
+    }
+    interface IWing2                   // interface --> 특수한 클래스      //Abstract 클래스에서 발전했음.     //Virtual 을 작성안해도 그렇게 되있음
+    {
+        public void Fly()                         //Abstract Method
+        {
+            Console.WriteLine("날아오르다");
+        }
+
+    }
+
+    class Unicon : Horse, IWing
+    {
+        // interface Method 구현
+        public void Fly()
+        {
+            Console.WriteLine("유니콘이 날고 있다.");
+        }
+        //Unicon의 멤버 Method
+        public void PerformMagic()
+        {
+            Console.WriteLine("마법을 사용합니다.");
+        }
+    }
+
+
+
+
+
+
+
+
+
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Unicon A = new Unicon();
+            A.Run();
+            A.Fly();
+            A.PerformMagic();
+
+        }
+    }
+}
+	
