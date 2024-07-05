@@ -1,0 +1,29 @@
+namespace Exam03
+{
+    internal class Program
+    {
+        //Q) 배열 요소값 중 가장 큰 값을 MAX로 대입 후 출력하라
+        static int GetMax(int[] arr)
+        {
+            int max = int.MinValue;
+
+            for (int i = 0; i < arr.Length; i++)
+            {
+                if (arr[i] > max)
+                {
+                    max = arr[i];
+                }
+
+            }
+            return max;
+        }
+
+
+        static void Main(string[] args)
+        {
+            int[] arr = { 1, 62, -464, 64546, 13 };
+            
+            Console.WriteLine(GetMax(arr));
+        }
+    }
+}
