@@ -1,0 +1,26 @@
+namespace sosu2
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            bool flag = false;
+            for (int i = 2; i <= 100; i++)
+            {
+                for(int j = 2; j < i; j++)
+                {
+                    if (i%j == 0)
+                    {
+                        flag = true;
+                        break;
+                    }
+                }
+                if (flag == false)
+                {
+                    Console.WriteLine(i);
+                }
+                flag = false;
+            }
+        }
+    }
+}
