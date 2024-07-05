@@ -1,0 +1,67 @@
+namespace Dowhile
+{
+    internal class Program
+    {
+        //메뉴 선택
+        static void Main(string[] args)
+        {
+            int i = 0;
+            do {
+                Console.WriteLine("메뉴선택 : ");
+                Console.WriteLine("1. 데이터 베이스 입력");
+                Console.WriteLine("2. 데이터 베이스 검색");
+                Console.WriteLine("3. 데이터 베이스 수정");
+                Console.WriteLine("4. 데이터 베이스 삭제");
+                int number = Int32.Parse(Console.ReadLine());
+                switch (number)
+                    { 
+                    case 1:
+                        Console.WriteLine("데이터 베이스 입력을 선택하셨습니다.");
+                        Console.WriteLine();
+                        break;
+                    case 2:
+                        Console.WriteLine("데이터 베이스 검색을 선택하셨습니다.");
+                        Console.WriteLine();
+                        break;
+                    case 3:
+                        Console.WriteLine("데이터 베이스 수정을 선택하셨습니다.");
+                        Console.WriteLine();
+                        break;
+                    case 4:
+                        Console.WriteLine("데이터 베이스 삭제을 선택하셨습니다.");
+                        Console.WriteLine();
+                        break;
+                    case 5:
+                        Console.WriteLine("종료");
+                        Console.WriteLine();
+                        break;
+                    default:
+                        Console.WriteLine("1~5번의 수를 선택해주세요");
+                        Console.WriteLine();
+                        break;
+                }
+                if (number == 1)
+                {
+                    continue;
+                }
+                else if (number == 2)
+                {
+                    continue;
+                }
+                else if (number == 3)
+                {
+                    continue;
+                }
+                else if (number == 4)
+                {
+                    continue;
+                }
+                else if (number == 5)
+                {
+                    break;
+                }
+            } while (i < 3);
+
+        }
+    }
+}
