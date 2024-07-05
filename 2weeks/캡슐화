@@ -1,0 +1,46 @@
+using System.Security.Cryptography.X509Certificates;
+
+namespace OOP_Practise
+{
+    internal class Program
+    {
+        class Cat
+        {
+            public int punch;
+            public string walk;
+            public Cat()
+            {
+                this.punch = 100;
+                this.walk = "꽁꽁 얼어붙은 한강위로 ";
+            }
+
+            public Cat(string walk)
+            {
+                this.punch = 10000;
+                this.walk = walk;
+            }
+
+            public string River2()
+            {
+                return this.walk + "고양이가 걸어다닙니다.";
+            }
+            public string Nyang2()
+            {
+                return this.punch + "mg 급 냥냥 펀치가 날아간다!";
+            }
+            
+        }
+        static void Main(string[] args)
+        {
+            Cat coco = new Cat();
+            Console.WriteLine(coco.River2());
+            Console.WriteLine(coco.Nyang2());
+
+            Cat roro = new Cat("로로 ");
+            Console.WriteLine(roro.River2());
+            Console.WriteLine(roro.Nyang2());
+        }
+
+
+    }
+}
