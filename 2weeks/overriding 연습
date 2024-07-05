@@ -1,0 +1,71 @@
+namespace OOPApp06
+{
+    class Shape
+    {
+        public int vertex; //멤버 변수
+
+        //Default Constructor
+        public Shape()
+        {
+            vertex = 0;
+        }
+
+        public void ShowVertex()
+        {
+            Console.WriteLine(this.vertex);
+        }
+
+        public void ShowVertex(string msg, string position, int repeat)                                  //ShowVertex는 건드리지 않고 Void 나 ShowVertex()의 ()를 채워넣어야한다.
+        {
+            Console.WriteLine(msg + "  " + vertex + "현재지역은" + position + repeat + "입니다");
+        }
+
+        public virtual void ShowName()
+        {
+            Console.WriteLine("도형입니다.");
+        }
+
+
+    }
+
+    class Triangle : Shape
+    {
+        public Triangle()
+        {
+            vertex = 3;
+        }
+
+        public override void ShowName()
+        {
+            Console.WriteLine("삼각형입니다.");
+        }
+    }
+
+    class Circle : Shape
+    {
+        public Circle()
+        {
+
+        }
+
+        public override void ShowName()
+        {
+            Console.WriteLine("원    입니다.");
+        }
+    }
+
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Triangle triangle = new Triangle();
+            Circle circle = new Circle();
+            Shape shape = new Shape();
+            triangle.ShowVertex();
+            triangle.ShowVertex("꼭지점의 갯수는 : ", "안동", 3);
+            circle.ShowVertex();
+            triangle.ShowName();
+            circle.ShowName();
+        }
+    }
+}
