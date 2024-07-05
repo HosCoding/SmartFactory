@@ -1,0 +1,37 @@
+using System.Diagnostics.CodeAnalysis;
+
+namespace Quiz03
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("첫 번째 숫자를 입력하세요:");
+            int a = Int32.Parse(Console.ReadLine());
+
+            Console.WriteLine("연산자(+,-,*,/)를 입력하세요");
+            string op = Console.ReadLine();
+
+            Console.WriteLine("두 번째 숫자를 입력하세요:");
+            int b = Int32.Parse(Console.ReadLine());
+
+            switch (op)
+            {
+                case "+":
+                    Console.WriteLine($"결과는 {a + b} 입니다.");
+                    break;
+                case "-":
+                    Console.WriteLine($"결과는 {a - b} 입니다.");
+                    break;
+                case "*":
+                    Console.WriteLine($"결과는 {a * b} 입니다.");
+                    break;
+                case "/":
+                    Console.WriteLine($"결과는 {(double)a / b} 입니다.");
+                    break;
+
+            }
+
+        }
+    }
+}
