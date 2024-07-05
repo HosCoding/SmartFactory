@@ -1,0 +1,20 @@
+using System.Diagnostics.Metrics;
+
+namespace FirstFor
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            int counter = 0;
+            int sum = 0;
+            // i를 1로 받으면 sum을 바로 i를 넣는게 가능하다.
+            for (int i = 1; i < 100; i++)
+            {
+                sum += i;
+                
+            }
+                Console.WriteLine(sum);
+        }
+    }
+}
