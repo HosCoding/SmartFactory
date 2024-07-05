@@ -1,0 +1,38 @@
+using System.Numerics;
+using System.Threading.Tasks.Sources;
+
+namespace Quiz06
+{
+    internal class Program
+    {
+        // 국어 영어 수학 성적을 입력받아 총점을 만드는 프로그램 메소드를 만들기
+        static int[] InputScore()
+        {
+            int[] score = new int[3];
+            for (int i = 0; i < score.Length; i++)
+            {
+                score[i] = Int32.Parse(Console.ReadLine());
+            }
+            return score; 
+        }
+        static int GetSum(int[] score)
+        {
+            int sum = 0;
+
+            for (int i =0; i<3; i++)
+            {
+                sum += score[i];
+            }
+            return sum;
+        }
+
+        static void Main(string[] args)
+        {
+            // 성적을 입력받는 메소드
+            int[] score = InputScore();
+            // 총점을 구하는 메소드 작성
+            int sum = GetSum(score);
+            Console.WriteLine($"총점 : {sum}");
+        }
+    }
+}
