@@ -1,0 +1,28 @@
+using System.ComponentModel.DataAnnotations;
+
+namespace TestApp02
+{
+    
+    
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] score = new int[3];
+            Random random = new Random();
+            
+            for (int i = 0; i < score.Length; i++)
+            {
+                score[i] = random.Next(70,101);
+            }
+            Console.WriteLine($"Total : {score.Sum()}");
+            Console.WriteLine($"Max : {score.Max()}");
+            Console.WriteLine($"Min : {score.Min()}");
+            Console.WriteLine($"Avg : {score.Average()}");
+
+
+
+
+        }
+    }
+}
