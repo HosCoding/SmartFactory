@@ -1,0 +1,27 @@
+namespace App000
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            int A = Int32.Parse(Console.ReadLine());
+            int j = 0;
+            for (int i = 1; i <= 1000; i++)
+            {
+                if (A % i == 0)
+                {
+                    j += i;
+                }
+            }
+            j = j - A;
+            if (j == A)
+            {
+                Console.WriteLine("완전수");
+            }
+            else
+            {
+                Console.WriteLine("일반 정수");
+            }
+        }
+    }
+}
