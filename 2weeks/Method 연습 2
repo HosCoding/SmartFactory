@@ -1,0 +1,50 @@
+namespace MethodApp02
+{
+    class Bank
+    {
+        //1. 멤버 변수
+        private int money;
+        //2. 생성자
+        public Bank()
+        {
+            this.money = 1;               //this는 멤버를 뜻하.ㅁ
+        }
+        //3. 멤버 메소드
+        // 예금하다
+        
+        public void Deposite()
+        {
+            Console.WriteLine($"{money} 만 원 을 예금을 하다.");
+        }
+        public void Deposite(int money)
+        {
+            Console.WriteLine($"{money} 만 원 을 예금하다.");
+        }
+        //인출하다
+        public void WithDraw()              //Camel 명명법 - 
+                                            //Snake 명명법 - 
+                                            //
+        {
+            Console.WriteLine($"{money} 만 원 을 인출하다.");
+        }
+        //이체하다
+        public void Transfer()
+        {
+            Console.WriteLine($"{money} 만 원 을 이체하다.");
+        }
+
+
+    }
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            //객체
+            Bank NH = new Bank();
+            NH.Deposite();
+            NH.Deposite(100000);
+            NH.Transfer();
+            NH.WithDraw();
+        }
+    }
+}
