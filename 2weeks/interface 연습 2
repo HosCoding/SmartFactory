@@ -1,0 +1,64 @@
+namespace OOPApp07
+{
+    class Eye
+    {
+        public void See()
+        {
+            Console.WriteLine("보다");
+        }
+    }
+
+    interface Nose
+    {
+        public void Smell()
+        { Console.WriteLine("맡다"); }
+    }
+
+    interface Mouse
+    {
+        public void Eat()
+        { Console.WriteLine("먹다"); }
+    }
+
+    interface Ear
+    {
+        public void Listen()
+        { Console.WriteLine("듣다"); }
+    }
+
+    class Face : Eye, Nose, Mouse, Ear
+    {
+        public void See()
+        {
+            Console.WriteLine("보고 있다");
+        }
+
+        public void Smell()
+        {
+            Console.WriteLine("맡고 있다");
+        }
+        public void Eat()
+        {
+            Console.WriteLine("먹고 있다");
+        }
+        public void Listen()
+        {
+            Console.WriteLine("듣고 있다");
+        }
+    }
+
+
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Face face = new Face();
+            
+            face.See();
+            face.Smell();
+            face.Eat();
+            face.Listen();
+
+        }
+    }
+}
