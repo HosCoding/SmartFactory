@@ -1,0 +1,33 @@
+using System.ComponentModel.Design;
+using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Metrics;
+
+namespace FirstFor
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            int i = 0;
+            int j = 0;
+            int k = 0;
+            while (i < 100)  
+            {
+                i++;
+                if (i % 2 == 0)
+                {
+                    j = j + i;
+
+                }
+                else
+                {
+                    k = k + i;
+                }
+            }
+         Console.WriteLine($"{j}");
+         Console.WriteLine($"{k}");
+            
+            
+        }
+    }
+}
