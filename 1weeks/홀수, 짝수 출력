@@ -1,0 +1,22 @@
+namespace ifAPP01
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            int a = Int32.Parse(Console.ReadLine()); // 변수 선언 & 초기화 
+
+            if (a % 2 == 0) 
+            {
+                Console.WriteLine(a);
+                Console.WriteLine("짝수", a);
+            }
+
+            else 
+            {
+                Console.WriteLine(a);
+                Console.WriteLine("홀수", a);
+            }
+        }
+    }
+}
