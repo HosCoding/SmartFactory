@@ -1,0 +1,53 @@
+namespace PropertyApp02
+{
+    class Person
+    {
+        //멤버변수
+        private string name;
+        private int age;
+        public String Color { get; set; }
+
+        //Property
+        public string Name
+        {
+            set
+            {
+                name = value;
+            }
+            get
+            {
+                return name;
+            }
+        }
+
+        public int Age
+        {
+            get
+            {
+                return age;
+            }
+            set
+            {
+                if (value >= 0)
+                {
+                    age = value;
+                }
+                else
+                {
+                    Console.WriteLine("나이는 0살보다 어릴 수 없습니다.");
+                }
+            }
+        }
+        internal class Program
+        {
+            static void Main(string[] args)
+            {
+                Person HoS = new Person();
+                HoS.name = "호성";
+                HoS.Age = 23;
+
+                Console.WriteLine($"이름 {HoS.Name} 나이 : {HoS.Age}");
+            }
+        }
+    }
+}
