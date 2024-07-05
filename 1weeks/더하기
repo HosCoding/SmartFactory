@@ -1,0 +1,16 @@
+namespace ConsoleApp6
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            int value;
+            int value2;
+            value = Int32.Parse(Console.ReadLine());
+            value2 = Int32.Parse(Console.ReadLine());
+
+            int result = value + value2;
+            Console.WriteLine(result);
+        }
+    }
+}
