@@ -1,0 +1,20 @@
+namespace Quiz02
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+
+            {
+                Console.Write("반지름을 입력해주세요 : ");
+                double radius = double.Parse(Console.ReadLine());
+
+                double area = radius * radius * Math.PI;
+
+                Console.WriteLine($"넓이는 : {area:F2}입니다.");
+
+            }
+        }
+    }
+
+}
