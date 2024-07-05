@@ -1,0 +1,12 @@
+namespace ConsoleApp3
+{
+    class MainClass
+    {
+        static void Main(string[] args)
+        {
+            string greet = "반갑습니다.";
+            string name = "채호성";
+            Console.WriteLine($"{greet} \n나는 {name} 입니다.");
+        }
+    }
+}
