@@ -1,0 +1,15 @@
+namespace Dowhile
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+                        int k = 0;
+            do
+            {
+                Console.WriteLine("Hello World");
+                k++;
+            } while (k < 3);
+        }
+    }
+}
