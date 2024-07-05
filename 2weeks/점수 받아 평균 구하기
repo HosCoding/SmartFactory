@@ -1,0 +1,51 @@
+using System.Diagnostics.CodeAnalysis;
+
+namespace ScoreApp02
+{
+    internal class Program
+    {
+        //InputThreeScore()
+
+        static int[] InputThreeScore()
+        {
+            int[] score = new int[3];
+            for (int i = 0; i < score.Length; i++)
+            {
+                score[i] = i;
+                score[i]= Int32.Parse(Console.ReadLine());
+            }
+            
+            return score;
+        }
+
+        static int TotalScore(int[] arr)       //재료를 받아야 함. 그래서 int[] arr 을 쓰는거임.
+        {
+            int totalScore = 0;
+            foreach (int number in arr)        //number에서 꺼내기
+            {
+                totalScore += number;
+            }
+
+            return totalScore;
+        }
+
+        static double GetAvg(int totalScore)
+        {
+            double avg = 0.0;
+            avg = totalScore / 3.0;
+            return avg;
+        } 
+
+        static void Main(string[] args)
+        {
+            int[] scores = InputThreeScore(); // 세개의 점수를 입력받아 오기 --> 배열
+            int totalScore = TotalScore(scores);
+            Console.WriteLine(totalScore);
+            double avg = GetAvg(totalScore);
+            Console.WriteLine($"{avg:F2}");
+
+
+
+        }
+    }
+}
