@@ -1,0 +1,39 @@
+namespace Dowhile
+{
+    internal class Program
+    {
+        //메뉴 선택
+        static void Main(string[] args)
+        {
+            int choice;
+            do
+            {
+                Console.WriteLine("메뉴선택 : ");
+                Console.WriteLine("1. 데이터 베이스 입력");
+                Console.WriteLine("2. 데이터 베이스 검색");
+                Console.WriteLine("3. 데이터 베이스 수정");
+                Console.WriteLine("4. 데이터 베이스 삭제");
+                choice = Int32.Parse(Console.ReadLine());
+                switch (choice)
+                {
+                    case 1:
+                        Console.WriteLine("입력");
+                        break;
+                    case 2:
+                        Console.WriteLine("검색");
+                        break;
+                    case 3:
+                        Console.WriteLine("수정");
+                        break;
+                    case 4:
+                        Console.WriteLine("삭제");
+                        break;
+                    case 5:
+                        Console.WriteLine("종료");
+                        break;
+
+                }
+            } while (choice != 5);
+        }
+    }
+}
