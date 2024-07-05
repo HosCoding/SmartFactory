@@ -1,0 +1,23 @@
+namespace sosu
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            for (int i = 2; i < 100; i++)
+            {
+                for (int j = 2; j < 100; j++)
+                {
+                    if (i == j)
+                    {
+                        Console.WriteLine(j);
+                    }
+                    else if (i % j == 0)
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+    }
+}
