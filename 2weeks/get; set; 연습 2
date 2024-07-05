@@ -1,0 +1,56 @@
+using System.Reflection.Metadata.Ecma335;
+
+namespace PropertyMake01
+{
+    class Cat
+    {
+        private string name;
+        private int age;
+        private string color;
+
+
+        public string Name
+        {
+            get
+            { return name; }
+            set
+            {
+                name = value;
+            }
+        }
+
+        public int Age
+        {
+            get { return age; }
+            set { age = value; }
+        }
+
+        public string Color
+        {
+            get { return color; }
+            set { color = value; }
+        }
+        public string ShowCatInfo()
+        {
+            return $"{name}의 나이는{age} 살 이고 색깔은 {color} 입니다.";
+        }
+
+        
+
+
+
+
+    }
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Cat cat = new Cat();
+            cat.Name = "야옹이";
+            cat.Age = 7;
+            cat.Color = "하얀색";
+            cat.ShowCatInfo();
+            Console.WriteLine(cat.ShowCatInfo());
+        }
+    }
+}
