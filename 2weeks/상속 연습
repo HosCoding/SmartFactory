@@ -1,0 +1,45 @@
+namespace OOPApp02
+{
+    class Shape
+    {
+        public string name;
+        public Shape()
+        {
+            this.name = "도형";
+            name = "다각형";
+            Console.WriteLine("부모클래스 생성자!");
+        }
+
+        //메소드
+        public virtual void Draw()
+        {
+            Console.WriteLine("도형을 그리다.");
+        }
+
+    }
+
+    class Rectangle : Shape
+    {
+        public Rectangle()
+        {
+            Console.WriteLine("자식 클래스 생성자!");
+        }
+        //메소드
+        public override void Draw()
+        {
+            Console.WriteLine("사각형을 그리다.");
+        }
+    }
+
+
+
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Rectangle rect = new Rectangle();
+            Console.WriteLine(rect.name);
+            rect.Draw();
+        }
+    }
+}
