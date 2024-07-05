@@ -1,0 +1,19 @@
+namespace Array02
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] score = new int[3];
+            int total = 0;
+            for (int i = 0; i < score.Length; i++)
+            {
+                score[i] = Int32.Parse(Console.ReadLine());
+                total += score[i];
+            }
+            double average = total / score.Length;
+            Console.Write($"총점 : {total} ");
+            Console.Write($"평균 : {average:F2}");
+        }
+    }
+}
