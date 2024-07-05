@@ -1,0 +1,52 @@
+using System.Security.Cryptography.X509Certificates;
+
+namespace MethodApp04
+{
+    class Student
+    {
+        //enrollCourse() - 수강신청을 하다
+        //dropCourse() - 수강을 취소하다
+        //viewGrades() - 성적확인
+        public void EnrollCourse(string name,int f, string a)
+        {
+            Console.WriteLine($"{name}은 {f}학기에 {a} 과목을 수강신청을 해야한다");
+            Console.WriteLine(" ");
+        }
+
+        public void dropCourse(string name, string b)
+        {
+            Console.WriteLine($"{name}은 {b} 과목의 수강을 취소했다");
+            Console.WriteLine(" ");
+        }
+
+        public void viewGrades(string name, string c, int d)
+        {
+            Console.WriteLine($"{name}은 {c} 과목의 성적{d} 점을 보고 좌절했다.");
+        }
+
+    }
+    class Hi
+    {
+        public void Hi(string name, string name2, string feel)
+        {
+            Console.WriteLine($"{name}은 {name2}에게 인사를 {feel}하게 건냈다.");
+        }
+    }
+
+
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Student HoS = new Student();
+            HoS.EnrollCourse("호성", 2, "캡스톤 디자인 VIP");
+            HoS.dropCourse("일준", "일반 물리학 1");
+            HoS.viewGrades("유찬", "열역학", 20);
+
+            Hi Hello = new Hi();
+            Hello.Hi("호성", "성태", "반갑게");
+            Hello.Hi("유찬", "성태", "살갑게");
+            Hello.Hi("성태", "유찬", "의미심장하게");
+        }
+    }
+}
