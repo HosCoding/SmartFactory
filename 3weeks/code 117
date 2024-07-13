@@ -1,0 +1,26 @@
+namespace Code117
+{
+    struct School
+    {
+        public string schoolName;
+        public string StudentName;
+        public int StudentGrade;
+
+        public void Print()
+        {
+            Console.WriteLine("고등학교 입니다.");
+        }
+
+
+    }
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            School sc;     //new 사용 없이 가능  
+            sc.schoolName = "rakeside high school"; 
+
+            Console.WriteLine(sc.schoolName);
+        }
+    }
+}
