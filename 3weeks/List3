@@ -1,0 +1,40 @@
+namespace Code126
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            List<int> list = new List<int>();
+            Random random = new Random();
+          
+            
+
+            for (int i = 0; i < 7; i++)
+            {
+                int a = random.Next(1, 100);
+                list.Add(a);
+                Console.WriteLine(a);
+            }
+            Console.WriteLine("-------------");
+            list.Sort();
+            list.Reverse();
+            list.Insert(0, -7);
+            list.Insert(8, -100);
+
+            foreach (int i in list)
+            {
+                Console.WriteLine(i);
+            }
+            Console.WriteLine("-------------");
+
+            list.Remove(-7);
+            foreach (int i in list)
+            {
+                Console.WriteLine(i);
+            }
+            
+            
+
+        }
+    }
+}
