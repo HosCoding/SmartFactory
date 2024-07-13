@@ -1,0 +1,49 @@
+using System.Drawing;
+using System.Runtime.InteropServices;
+
+namespace ConsoleApp8
+{
+    abstract class Teran {
+        public virtual void Attack()
+        {
+            Console.WriteLine("공격합니다.");
+        }
+    }
+
+    class Marin : Teran{ 
+        
+    public override void Attack()
+        {
+            Console.WriteLine("마린");
+        }
+    }
+    class Firebat : Teran
+    {
+        public override void Attack()
+        {
+            Console.WriteLine("파이어뱃");
+        }
+    }
+    class SiegeTank : Teran {
+        public override void Attack()
+        {
+            Console.WriteLine("탱크");
+        }
+    }
+
+
+
+    internal class Program
+        {
+            static void Main(string[] args)
+            {
+            Teran teranUnit001 = new Marin();
+            Teran teranUnit002 = new Firebat();
+            Teran TeranUnit003 = new SiegeTank();
+            teranUnit001.Attack();
+            teranUnit002.Attack();
+            TeranUnit003.Attack();
+            }
+        }
+    }
+
