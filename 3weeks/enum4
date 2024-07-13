@@ -1,0 +1,31 @@
+namespace Code101
+{
+    enum TrafficLights { green=1, red=10, yellow=100 }
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            //주소를 통한 접근
+            int x = int.Parse(Console.ReadLine());
+
+            switch((TrafficLights)x)
+            {
+                case TrafficLights.green:
+                    {
+
+                        break;
+                    }
+                case TrafficLights.red:
+                    {
+
+                        break;
+                    }
+                case TrafficLights.yellow:
+                    {
+
+                        break;
+                    }
+            }
+        }
+    }
+}
