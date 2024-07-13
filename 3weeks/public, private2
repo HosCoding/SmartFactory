@@ -1,0 +1,48 @@
+using System.Xml.Linq;
+
+namespace LocalVariableTest
+{
+    class BankAccount
+    {
+        //멤버 ((잔고))
+        private double balance;
+        //메소드 1. 예금
+        public void Deposit(double money)
+        {
+            balance += money;
+            Console.WriteLine(balance);
+        }
+
+        //메소드 2. 인출
+        public void WithDraw(double money)
+        {
+            balance -= money;
+            Console.WriteLine(balance);
+        }
+        //메소드 3. 잔고확인
+        public double GetBalance()
+        {
+            Console.WriteLine($"잔고 확인 : {balance}");
+            return balance;
+            
+        }
+    }
+    internal class Program
+    {
+
+        static void Main(string[] args)
+        {
+            BankAccount account = new BankAccount();
+            int a = int.Parse(Console.ReadLine());
+            account.Deposit(a);
+            int b = int.Parse(Console.ReadLine());
+            account.WithDraw(b);
+            account.GetBalance();
+            //30000만원 인출
+
+            //잔고 확인
+
+        }
+    }
+}
+
