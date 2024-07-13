@@ -1,0 +1,20 @@
+namespace MethodTest02
+{
+    internal class Program
+    {
+        static void GetNumbers(ref int x,ref int y)
+        {
+            x = 5;
+            y= 0;
+        }
+        static void Main(string[] args)
+        {
+            int a = 7;
+            int b = 8;
+
+            GetNumbers(ref a,ref b);
+            Console.WriteLine($"a에 저장된 값은 {a}입니다.");
+            Console.WriteLine($"a에 저장된 값은 {b}입니다.");
+        }
+    }
+}
