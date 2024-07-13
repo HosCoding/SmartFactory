@@ -1,0 +1,26 @@
+namespace Pibonacci001
+{
+
+    public class Solution
+    {
+       public int Pibonacci(int n)
+        {
+            if (n == 0)
+                return 0;
+            if(n == 1)
+                return 1;
+
+
+            return Pibonacci(n-1)+Pibonacci(n-2) % 1234567 ;
+        }
+    }
+    internal class Program
+    {
+
+        static void Main(string[] args)
+        {
+            Solution s = new Solution();
+            Console.WriteLine(s.Pibonacci(3));
+        }
+    }
+}
