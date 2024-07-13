@@ -1,0 +1,37 @@
+using System.ComponentModel;
+
+namespace IndexerTest
+{
+    class MemberInfo
+    {
+        private string[] names = new string[5];
+
+        public string this[int index]
+        {
+            set
+            {
+                names[index] = value;
+            }
+            get
+            {
+                return names[index];
+            }
+
+            //매개변수를 두개 가지는 인덱서
+
+        }
+        internal class Program
+        {
+            static void Main(string[] args)
+            {
+                MemberInfo mInfo = new MemberInfo();
+                mInfo[0] = "채호성";
+                mInfo[2] = "나";
+
+                Console.WriteLine(mInfo[0]);
+                Console.WriteLine(mInfo[2]);
+
+            }
+        }
+    }
+}
