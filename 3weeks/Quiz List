@@ -107,3 +107,363 @@ namespace MyAddressBook
         }
     }
 }
+
+-----------------
+
+namespace MyAddressBook
+{
+    class Person
+    {
+        private int id;
+        private string name;
+        private string hp;
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string HP { get; set; }
+
+        
+    }
+
+    class NewPerson : Person
+{
+         public NewPerson(int adress, string name, string hp)
+        {
+             Id = adress;
+              Name = name;
+              HP = hp;
+          }
+        }
+internal class Program
+    {
+        static void Main(string[] args)
+        {
+            List<Person> addressbook = new List<Person>();
+            int n;
+            do
+            {
+                Console.WriteLine("1. 데이터 삽입");
+                Console.WriteLine("2. 데이터 삭제");
+                Console.WriteLine("3. 데이터 조회");
+                Console.WriteLine("4. 데이터 수정");
+                Console.WriteLine("5. 종료");
+                Console.WriteLine("--------------");
+                Console.Write("숫자를 입력해 주세요 : ");
+                n = int.Parse(Console.ReadLine());
+                if (n != 0)
+                {
+                    switch (n)
+                    {
+                        case 1:
+                            Console.WriteLine("1. 데이터 삽입을 선택하셨습니다.");
+                            Console.WriteLine("숫자 ex. 01, 사람이름, 휴대폰 번호를 차례대로 입력해주세요");
+                            int a = int.Parse(Console.ReadLine());
+                            string b = Console.ReadLine();
+                            string c = Console.ReadLine();
+                            Console.WriteLine("--------------");
+                            NewPerson newperson = new NewPerson(a, b, c);
+                            addressbook.Add(newperson);
+                            foreach (Person person in addressbook)
+                            {
+                                newperson = new NewPerson(a, b, c);
+                            }
+                            break;
+                        case 2:
+                            Console.WriteLine("2. 데이터 삭제을 선택하셨습니다.");
+
+                            foreach(Person person in addressbook)
+														{
+														    addressbook.RemoveAt(1);
+														}
+                            break;
+                        case 3:
+                            Console.WriteLine("3. 데이터 조회를 선택하셨습니다.");
+                            foreach (Person person in addressbook)
+                            {
+                                Console.WriteLine("--------------");
+                                Console.WriteLine(person.Id);
+                                Console.WriteLine(person.Name);
+                                Console.WriteLine(person.HP);
+                                Console.WriteLine("--------------");
+                            }
+                            break;
+                        case 4:
+                            Console.WriteLine("4. 데이터 수정을 선택하셨습니다.");
+                            Console.Write("수정할 넘버를 입력하세요 : ");
+														int fixId = int.Parse(Console.ReadLine());
+														
+														for (int i = 0; i < addressbook.Count; i++)
+														{
+														    if (addressbook[i].Id == fixId)
+														    {
+													        //해당 위치의 i의 데이터 수정
+													        addressbook.RemoveAt(i);
+													        Console.Write("수정된 ID 번호를 입력하세요 : ");
+													        addressbook[i].Id = int.Parse(Console.ReadLine());
+													        Console.Write("수정된 이름을 입력하세요 : ");
+													        addressbook[i].Name = Console.ReadLine();
+													        Console.Write("수정된 전화번호를 입력하세요 : ");
+													        addressbook[i].HP = Console.ReadLine();
+																}
+														}
+                            break;
+                        case 5:
+                            Console.WriteLine("종료를 선택하셨습니다.");
+                            break;
+                        default:
+                            Console.WriteLine("--------------");
+                            Console.WriteLine("1~5의 숫자를 입력해주세요.");
+                            Console.WriteLine("--------------");
+                            continue;
+                    }
+                }
+            } while (n != 5);
+        }
+    }
+}
+
+
+------------------
+
+namespace Soccer
+
+{
+
+    class Soccer()
+
+    {
+
+        public int Number { get; set; }
+
+        public string Name {  get; set; }
+
+        public int Age { get; set; }
+
+        public string Club { get; set; }
+
+        public string Postion { get; set; }
+
+
+
+    }
+
+
+
+    class NewSoccer : Soccer
+
+    {
+
+        public NewSoccer(int number, string name, int age, string club, string position)
+
+        {
+
+            Number = number;
+
+            Name = name;
+
+            Age = age;
+
+            Club = club;
+
+            Postion = position;
+
+        }
+
+    }
+
+    internal class Program
+
+    {
+
+        static void Main(string[] args)
+
+        {
+
+            List<Soccer> ml = new List<Soccer>();
+
+
+
+
+
+            int a;
+
+            do
+
+            {
+
+                Console.WriteLine("1. 클럽 선수 영입");
+
+                Console.WriteLine("2. 클럽 선수 방출");
+
+                Console.WriteLine("3. 클럽 선수 조회");
+
+                Console.WriteLine("4. 클럽 선수 수정");
+
+                Console.WriteLine("5. 클럽 폭파");
+
+                Console.WriteLine("--------------------");
+
+                a = int.Parse(Console.ReadLine());
+
+                switch (a)
+
+                {
+
+                    case 1:
+
+                        Console.WriteLine("1. 선수 영입을 선택하셨습니다.");
+
+                        Console.WriteLine("--------------------");
+
+                        Console.WriteLine("번호, 이름, 나이, 클럽, 포지션 을 순서대로 작성해주세요.");
+
+                        
+
+                        int aa = int.Parse(Console.ReadLine());
+
+                        string bb = Console.ReadLine();
+
+                        int cc = int.Parse(Console.ReadLine());
+
+                        string dd = Console.ReadLine();
+
+                        string ee = Console.ReadLine();
+
+                        NewSoccer ns = new NewSoccer(aa,bb,cc,dd,ee);
+
+                        ml.Add(ns);
+
+                        Console.WriteLine("--------------------");
+
+                        break;
+
+                    case 2:
+
+                        Console.WriteLine("2. 클럽 선수 방출을 선택하셨습니다.");
+
+                        Console.WriteLine("--------------------");
+
+                        Console.Write("삭제할 번호를 입력해주세요 : ");
+
+                        int deleteId = int.Parse(Console.ReadLine());
+
+                        Console.WriteLine("--------------------");
+
+                        for (int i = 0; i < ml.Count; i++)
+
+                        {
+
+                            if (ml[i].Number == deleteId)
+
+                            {
+
+                                ml.RemoveAt(i);
+
+                            }
+
+                        }
+
+                        break;
+
+                    case 3:
+
+                        Console.WriteLine("3. 클럽 선수 조회를 선택하셨습니다.");
+
+                        Console.WriteLine("--------------------");
+
+                        foreach (NewSoccer i in ml)
+
+                        {
+
+                            Console.WriteLine("--------------");
+
+                            Console.WriteLine($"선수 번호 : {i.Number}");
+
+                            Console.WriteLine($"선수 이름 : {i.Name}");
+
+                            Console.WriteLine($"선수 나이 : {i.Age}");
+
+                            Console.WriteLine($"선수 클럽 : {i.Club}");
+
+                            Console.WriteLine($"선수 포지션 : {i.Postion}");
+
+                            Console.WriteLine("--------------");
+
+                        }
+
+                        break;
+
+                    case 4:
+
+                        Console.WriteLine("4. 클럽 선수 수정을 선택하셨습니다.");
+
+                        Console.WriteLine("수정할 번호를 입력해주세요");
+
+                        Console.WriteLine("--------------------");
+
+                        int fixnumber = int.Parse(Console.ReadLine());
+
+
+
+                        for(int i = 0; i < ml.Count; i++)
+
+                        {
+
+                            if (ml[i].Number == fixnumber)
+
+                            {
+
+                                ml.RemoveAt(i);
+
+                                Console.Write("수정된 번호를 입력하세요 : ");
+
+                                ml[i].Number = int.Parse(Console.ReadLine());
+
+                                Console.Write("수정된 이름을 입력하세요 : ");
+
+                                ml[i].Name = Console.ReadLine();
+
+                                Console.Write("수정된 나이를 입력하세요 : ");
+
+                                ml[i].Age = int.Parse(Console.ReadLine());
+
+                                Console.Write("수정된 클럽을 입력하세요 : ");
+
+                                ml[i].Club = Console.ReadLine();
+
+                                Console.Write("수정된 포지션을 입력하세요 : ");
+
+                                ml[i].Name = Console.ReadLine();
+
+                            }
+
+                        }
+
+
+
+                        break;
+
+                    case 5:
+
+                        Console.WriteLine("5. 축구협회가 망했습니다.");
+
+                        Console.WriteLine("--------------------");
+
+                        break;
+
+                    default:
+
+                        Console.WriteLine("1~5의 숫자를 입력해주세요.");
+
+                        Console.WriteLine("--------------------");
+
+                        break;
+
+                }
+
+            } while (a != 5);
+
+        }
+
+    }
+
+}
