@@ -1,0 +1,22 @@
+namespace enumApp02
+{
+    enum TrafficLights { green, red, yellow }
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            //주소를 통한 접근
+            for (int i = 0; i < 3; i++)
+            {
+                Console.WriteLine((TrafficLights)i);
+            }
+            //인스턴스(객체)를 통한 접근
+            TrafficLights r = TrafficLights.red;
+            TrafficLights g = TrafficLights.green;
+            TrafficLights y = TrafficLights.yellow;
+            Console.WriteLine(r);
+            Console.WriteLine(g);
+                Console.WriteLine(y);
+        }
+    }
+}
