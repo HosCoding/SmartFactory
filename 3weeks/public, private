@@ -1,0 +1,42 @@
+using System.Xml.Linq;
+
+namespace LocalVariableTest
+{
+    class ClassA
+    {
+        private int a;
+
+        private void PrintOutA()
+        {
+            Console.WriteLine(a);
+        }
+    }
+
+    class ClassB
+    {
+        public int b;
+        // 멤버 메소드
+
+        public void PrintOutB()
+        {
+            Console.WriteLine(b);
+        }
+        internal class Program
+        {
+
+            static void Main(string[] args)
+            {
+                ClassA x = new ClassA(); //객체 만들기는 지장이 없다.
+                //x.a = 123;
+                //x.PrintOutA();  둘다 에러남
+                //x.b = 123;
+                //x.PrintOutA();  둘다 에러남
+
+                ClassB y = new ClassB();
+                y.b = 123;
+                y.PrintOutB();
+
+            }
+        }
+    }
+}
