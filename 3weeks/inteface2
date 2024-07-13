@@ -1,0 +1,45 @@
+namespace InterfaceTest02
+{
+    interface IMaker
+    {
+        void MadeWhere();
+    }
+    interface IOwner
+    {
+        void WhoOwns();
+    }
+    class Korea : IMaker, IOwner
+    {
+        public void MadeWhere()
+        {
+            Console.WriteLine("국산 입니다.");
+        }
+        public void WhoOwns()
+        {
+            Console.WriteLine("대한민국 제품입니다.");
+        }
+    }
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            IMaker km = new Korea();
+            km.MadeWhere();
+           // km.WhoOwns(); //안보임
+
+            IOwner ko = new Korea();
+            // ko.MadeWhere(); //안보임
+            ko.WhoOwns();
+
+            Object obj = new Korea();
+            // obj.MadeWhere();           // 안보임 (제일 위의 부모라도, 구현을 받지 않아 만들어지지 않음)
+            // obj.WhoOwns();             // 안보임
+ 
+
+            Korea korea = new Korea();
+            korea.MadeWhere();
+            korea.WhoOwns();
+
+        }
+    }
+}
