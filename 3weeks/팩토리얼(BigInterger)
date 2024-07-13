@@ -1,0 +1,21 @@
+using System.Numerics;
+
+namespace FactorialDynamic
+{
+    internal class Program
+    {
+        static BigInteger Factorial(int n)
+        {
+            if (n == 1)
+                return n;
+            else
+                return n * Factorial(n - 1);
+        }
+
+        static void Main(string[] args)
+        {
+            int a = 13;
+            Console.WriteLine(Factorial(a));
+        }
+    }
+}
