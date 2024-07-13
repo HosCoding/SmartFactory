@@ -1,0 +1,23 @@
+using System.Xml.Linq;
+
+namespace LocalVariableTest
+{
+    internal class Program
+    {
+        static int num;
+        static string str;
+
+        static void PrintVars()
+        {
+            int num = 100;
+            string str = "홍길동";
+
+            Console.WriteLine($"PrintVars : num = {num}, str = {str}");
+        }
+        static void Main(string[] args)
+        {
+            PrintVars();
+            Console.WriteLine($"Main : num = {num}, str = {str}");
+        }
+    }
+}
