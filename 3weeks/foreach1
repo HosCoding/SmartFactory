@@ -1,0 +1,17 @@
+using System.Globalization;
+
+namespace Array001
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] Numbers = new int[5] { 100, 200, 300, 400, 500 };
+            foreach(int n in Numbers)
+            {
+                Console.WriteLine(n);
+            }
+            
+        }
+    }
+}
