@@ -1,0 +1,23 @@
+namespace Code126
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            char[] chars = new char[3];
+            chars[0] = '뉴';
+            chars[1] = '진';
+            chars[2] = '스';
+
+            List<char> chrList = new List<char>();
+            chrList.Add('뉴');
+            chrList.Add('진');
+            chrList.Add('스');
+
+            foreach (char c in chars)
+            {
+                Console.Write(c);
+            }
+        }
+    }
+}
