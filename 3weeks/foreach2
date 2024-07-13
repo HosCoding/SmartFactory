@@ -1,0 +1,54 @@
+using System.Globalization;
+
+namespace Array001
+{
+    class Student
+    {
+        public int Id { get; set; }
+        public string Name { get; set; } = "채호성";
+        public string Major { get; set; } = "기설공";
+    }
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Student[] student = new Student[3];   //아래 요소들 마다 NEW 만들어주기
+            Student student0 = new Student();
+            Student student1 = new Student();
+            Student student2 = new Student();
+            student[0] = student0;
+            student[1] = student1;
+            student[2] = student2;
+
+            student0.Id = 1;
+            student0.Name = "정유찬";
+            student0.Major = "기계설계";
+
+            student1.Id = 2;
+            student1.Name = "김성태";
+            student1.Major = "전자공학";
+
+            student2.Id = 3;
+            student2.Name = "박순시";
+            student2.Major = "화학공학";
+
+            foreach (Student students in student)
+            {
+                Console.WriteLine(students.Id);
+                Console.WriteLine(students.Name);
+                Console.WriteLine(students.Major);
+            }
+
+            Console.WriteLine("  ");
+
+            for (int i = 0; i < student.Length; i++)
+            {
+                Console.WriteLine(student[i].Id);
+                Console.WriteLine(student[i].Name);
+                Console.WriteLine(student[i].Major);
+            }
+
+
+        }
+    }
+}
