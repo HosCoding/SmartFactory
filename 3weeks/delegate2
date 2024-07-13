@@ -1,0 +1,40 @@
+namespace Code117
+{
+    class Calculator
+    {
+        public int Plus(int a, int b)
+        {
+            return a + b;
+        }
+        public int Minus(int a, int b)
+        { return a - b; }
+        public int Multiple(int a, int b)
+            { return a * b; }
+        
+        public double Divide(int a, int b)
+            { return a / b; }
+
+        internal class Program
+        {
+            public delegate int Compute(int a, int b); //선언!!
+
+            static void Main(string[] args)
+            {
+                int a = 100, b = 200;
+                Calculator calculator = new Calculator();
+                Compute compute = calculator.Plus;
+                Console.WriteLine($"덧셈 : {0}", compute(a, b));
+
+                compute = calculator.Minus;
+                Console.WriteLine($"뺄셈 : {0}", compute(a, b));
+
+                compute = calculator.Multiple;
+                Console.WriteLine($"곱셈 : {0}", compute(a, b));
+
+                compute = calculator.Divide;
+                Console.WriteLine($"나눗셈 : {0}", compute(a, b));
+
+            }
+        }
+    }
+}
