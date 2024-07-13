@@ -1,0 +1,29 @@
+namespace Code126
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            List<int> numberList = new List<int>();
+            int num = 10;
+            for(int i = 0; i<5; i++)
+            {
+                numberList.Add(num);
+                num += 10;
+            }
+            Console.WriteLine($"배열 요소의 수 : {numberList.Count}");
+            Console.WriteLine($"리스트가 가질 수 있는 최대 자료의 수 : {numberList.Capacity}");
+            numberList.RemoveAt(3);            //index 제거, 전체 크기가 하나 줄어듦
+            numberList.Remove(20);             // 값으로 제거, 전체 크기가 줄어들지 않음, 중복되면 제일 앞의 값 제거
+            numberList.Insert(0, 5);
+            numberList.Sort();                 // 정렬
+            numberList.Reverse();             //값을 역순으로..
+            
+
+            foreach (int i in numberList)     
+            {
+                Console.WriteLine(i);
+            }
+        }
+    }
+}
