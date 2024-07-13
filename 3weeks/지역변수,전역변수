@@ -1,0 +1,19 @@
+namespace LocalVariableTest
+{
+    internal class Program
+    {
+        static string name = "Lee Soon Shin"; //전역변수, 멤버변수
+        static void ShowName()
+        {
+            //name = "홍길동";                //전역변수 덮어쓰기
+
+           // string name = "홍길동";         //지역변수
+            Console.WriteLine(name);
+        }
+        static void Main(string[] args)
+        {
+            ShowName();
+            Console.WriteLine(name);
+        }
+    }
+}
