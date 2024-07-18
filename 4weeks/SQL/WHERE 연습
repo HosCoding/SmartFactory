@@ -1,0 +1,2 @@
+select * from EMP
+where ENAME >= 'F' order by ename;
