@@ -1,0 +1,7 @@
+이름에 L이 들어가는 데이터 출력
+
+```csharp
+SELECT * FROM EMP WHERE ENAME LIKE '%_L%';
+```
+
+글자 앞에 _를 넣으면 포함된 이라는 뜻이 된다.
