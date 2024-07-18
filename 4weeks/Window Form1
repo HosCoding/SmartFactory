@@ -1,0 +1,136 @@
+namespace P98
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+        int Number = 0;
+        DateTime nowTime;
+        private void GetNumber()
+        {
+            Number++;
+        }
+        public void OutNumber()
+        {
+            textBox1.AppendText(Number + "\r\n");
+        }
+        public void GetTime()
+        {
+            nowTime = DateTime.Now;
+        }
+        public void OutTime()
+        {
+            textBox2.AppendText(nowTime + "\r\n");
+        }
+        private void btnEvent_Click(object sender, EventArgs e)
+        {
+            for(int i = 0; i<=100; i++)
+            {
+                GetNumber();
+                OutNumber();
+                GetTime();
+                OutTime();
+                Thread.Sleep(1000);
+            }
+        }
+    }
+}
+--------------------
+namespace P98
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+        int number = 0;
+        DateTime nowTime;
+
+        public void GetNumber()
+        { number++; }
+
+        public void OutNumber()
+        { textBox1.AppendText(number + "\r\n"); }
+
+        public void GetTime()
+        {
+            nowTime = DateTime.Now;
+            DateTime t1 = new DateTime(2024, 1, 1);
+        }
+
+        public void OutTime()
+        {
+            // string time = nowTime.ToString("yyyy-MM-dd HH:mm:ss (zzz)");
+            string time = nowTime.ToString("yyyy-MM-dd HH:mm:ss (zzz)");
+            textBox2.AppendText(nowTime + "\r\n");
+        }
+        private void btnEvent_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                GetNumber();
+                OutNumber();
+                GetTime();
+                OutTime();
+                Thread.Sleep(100);
+            }
+        }
+    }
+}
+------------------------------
+namespace WinFormsApp9
+{
+    public partial class Form1 : Form
+    {
+        private int number;
+        private int zeroSum, oneSum, twoSum;
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //100 숫자 가져오기
+            number = int.Parse(txtNum.Text);
+
+
+            for (int i = 0; i <= number; i++)
+            {
+
+                if (i % 3 == 0)
+                {
+                    txt1.AppendText(i + "+");
+                    zeroSum += i;
+                }
+                else if (i % 3 == 1)
+                {
+                    {
+                        txt2.AppendText(i + "+");
+                        oneSum += i;
+                    }
+                }
+                else
+                {
+                    {
+                        txt3.AppendText(i + "+");
+                        twoSum += i;
+                    }
+                }
+                
+            }
+            // 마지막 + 빼기
+            txt1.Text = txt1.Text.Substring(0, txt1.Text.Length - 1);
+            txt2.Text = txt2.Text.Substring(0, txt2.Text.Length - 1);
+            txt3.Text = txt3.Text.Substring(0, txt3.Text.Length - 1);
+            
+            //합 출력
+            txt1.AppendText("=" + zeroSum);
+            txt2.AppendText("=" + oneSum);
+            txt3.AppendText("=" + twoSum);
+        }
+    }
+}
