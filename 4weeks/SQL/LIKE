@@ -1,0 +1,7 @@
+select * from EMP where ENAME like 'S%';
+
+-------------------------------------------
+select * from EMP where ENAME like '%S%';
+
+-------------------------------------------
+select * from EMP where ENAME like '%S';
