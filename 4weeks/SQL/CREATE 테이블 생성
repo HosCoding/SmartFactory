@@ -1,0 +1,21 @@
+--테이블 생성하기
+CREATE TABLE student(
+id    INT,
+name  varchar2(20),
+hp    varchar2(13),
+location    varchar2(50)
+);
+--학생 테이블 구조 보기
+DESC student;
+
+--검색
+SELECT * FROM STUDENT;
+--삽입(INSERT)
+INSERT INTO STUDENT (id, name, hp, location)
+Values (1, '채호성', '010-0000-0000','안동');
+
+INSERT INTO STUDENT (id, name, hp, location)
+Values (2, '정유찬', '010-1111-1111','안동');
+
+INSERT INTO STUDENT (id, name, hp, location)
+Values (1, '김성태', '010-2222-2222','안동');
