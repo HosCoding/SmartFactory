@@ -1,0 +1,21 @@
+namespace Date001
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            string time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            Console.Write("년도 : ");
+            int year = int.Parse(Console.ReadLine());
+            Console.Write("월 : ");
+            int month = int.Parse(Console.ReadLine());
+            Console.Write("일 : ");
+            int day = int.Parse(Console.ReadLine());
+
+
+            string time2 = new DateTime(year, month, day).ToString("yyyy-MM-dd");
+            Console.WriteLine(time2);
+            Console.WriteLine($"현재 시간 : {time}");
+        }
+    }
+}
