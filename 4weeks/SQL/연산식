@@ -1,0 +1,5 @@
+SELECT * FROM EMP;
+SELECT ENAME, SAL, COMM FROM EMP;
+--------------------------------------
+  SELECT * FROM EMP;
+SELECT ENAME, SAL, SAL*12, COMM FROM EMP;
