@@ -1,0 +1,5 @@
+9월 두번째 목요일
+
+select  sysdate, 
+        next_day(to_date('24/08/01')-1, '목요일')+7
+from dual;
