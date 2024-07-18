@@ -1,0 +1,185 @@
+namespace ObjectList
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            char[] arr = new char[3] { 'a' , 'b', 'c'};
+            List<char> list = new List<char>();
+            // arr[0] = 'a';
+            list.Add('X'); list.Add('Y'); list.Add('Z');
+
+            foreach (char ch in list)
+            {
+                Console.WriteLine(ch);
+            }
+
+        }
+    }
+}
+-----------------
+namespace ObjectList
+{
+    class Person
+    {
+        public char ch;
+        public string name;
+    }
+
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            string[] arr = new string[3] { "홍길동", "이순신", "이형찬 Let's go"};   //stack에 들어가있는 변수
+            List<char> list = new List<char>();
+            // arr[0] = 'a';
+            list.Add('X'); list.Add('Y'); list.Add('Z');
+
+            Person[] persons =  new Person[2];         //요소를 담는 껍데기만 있는 상황임
+            Person p1 = new Person();                  //요소에 들어갈 객체를 만들어줘야되서 이게 만든 것
+            p1.name = "홍길동";
+            persons[0] = p1;
+            Person p2 = new Person();
+            p2.name = "이순신";
+            persons[1] = p2;
+
+            foreach(Person p in persons)
+            {
+                Console.WriteLine(p.name);
+            }
+
+        }
+    }
+}
+
+------------------------------------
+namespace ObjectList
+{
+    class Person
+    {
+        public char ch;
+        public string name;
+    }
+
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            string[] arr = new string[3] { "홍길동", "이순신", "이형찬 Let's go"};   //stack에 들어가있는 변수
+            List<char> list = new List<char>();
+            // arr[0] = 'a';
+            list.Add('X'); list.Add('Y'); list.Add('Z');
+
+            Person[] persons =  new Person[2];         //요소를 담는 껍데기만 있는 상황임
+            Person p1 = new Person();                  //요소에 들어갈 객체를 만들어줘야되서 이게 만든 것
+            p1.name = "홍길동";
+            persons[0] = p1;
+            Person p2 = new Person();
+            p2.name = "이순신";
+            persons[1] = p2;
+
+            List<Person> list2 = new List<Person>();       // 요소를 담는 객체 생성
+            Person p3 = new Person();                      // 요소 담기(hipe 에서 만들어짐)
+            p3.name = "이형찬";                            //
+            list2.Add(p3);
+
+            Person p4 = new Person();
+            p4.name = "채호성";
+            list2.Add(p4);
+
+            foreach(Person p in list2)
+            {
+                Console.WriteLine(p.name);
+            }
+
+        }
+    }
+}
+-----------------------------
+using System.ComponentModel.Design.Serialization;
+
+namespace ListObject01
+{
+    class Student
+    {
+        public String Name { get; set; }
+    }
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+
+
+
+            
+            //1. 리스트 studentList를 만드세요
+            List<Student> students = new List<Student>();
+            //2. 학생 3명을 만들어서 리스트에 넣으세요.
+            Student st = new Student();
+            Student st2 = new Student();
+            Student st3 = new Student();
+            //3. 학생은 "이순신", "강감찬", "채호성 Let's go"
+            st.Name = "이순신, ";
+            st2.Name = "강감찬, ";
+            st3.Name = "채호성 Let's go";
+            //4. 리스트에 학생을 담음
+            students.Add(st);
+            students.Add(st2);
+            students.Add(st3);
+            //5. 출력은 이름만 출력하고 순환문은 foreach를 사용
+            foreach (Student s in students)
+            {
+                Console.Write(s.Name);
+            }
+
+
+
+        }
+    }
+}
+------------------------
+namespace ListQuiz
+{
+    class Car
+    {
+        public string brand { get; set; }
+        public string speed { get; set; }
+    }
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            List<Car> cars = new List<Car>();
+            //1. 브랜드와 스피드 다른 자동차 3개 만들기
+            // 2. car 객체를 담는 carList를 만들기
+            Car car1 = new Car();
+            car1.brand = "범퍼카";
+            car1.speed = "4km/h";
+            
+            Car car2 = new Car();
+            car2.brand = "남아메리카";
+            car2.speed = "0km/h";
+
+            Car car3 = new Car();
+            car3.brand = "히카르두 카카";
+            car3.speed = "1km/h";
+
+            cars.Add(car1);
+            cars.Add(car2);
+            cars.Add(car3);
+            //3. carList를 이용해서 자동차의 브랜드와 속도 출력
+            foreach (Car car in cars)
+            {
+                Console.WriteLine(car.brand);
+                Console.WriteLine(car.speed);
+                Console.WriteLine();
+            }
+            
+           
+            
+        }
+    }
+}
+
+-----------------------------------
+
