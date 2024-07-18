@@ -1,0 +1,7 @@
+- OR 연산자와 IS NULL 합성 (5-29)
+    
+    ```csharp
+    SELECT * FROM EMP WHERE SAL > NULL OR COMM IS NULL;
+    ```
+    
+    이렇게 작성이 가능하다.
