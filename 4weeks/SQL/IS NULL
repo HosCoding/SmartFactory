@@ -1,0 +1,3 @@
+COMM 이 NULL인 값인 데이터를 출력
+
+SELECT * FROM EMP WHERE COMM IS NULL;
