@@ -1,0 +1,6 @@
+select  31.4159, 
+        round(31.4159,1),
+        round(31.4159,2),
+        round(31.4159,-1),
+        round(31.4159,-2)
+from dual;
