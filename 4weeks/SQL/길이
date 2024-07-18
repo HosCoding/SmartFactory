@@ -1,0 +1,9 @@
+- 
+    
+    ```csharp
+    select length('홍길동') as 문자열길이,
+           lengthb('홍길동') as 문자열크기
+    from dual;
+    ```
+    
+    substr(job, 5, 1)는 substr(job, 5)로 표현가능!
