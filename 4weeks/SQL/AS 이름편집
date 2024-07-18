@@ -1,0 +1,3 @@
+SELECT ENAME, SAL AS 월급, (SAL+SAL+SAL+SAL+SAL+COMM) AS 사개월급여  FROM EMP;
+------------------
+SELECT ENAME 이름, SAL  월급, (SAL+SAL+SAL+SAL+SAL+COMM)사개월급여  FROM EMP;
