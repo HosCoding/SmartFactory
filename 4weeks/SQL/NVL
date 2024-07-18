@@ -1,0 +1,8 @@
+select empno, ename, sal, comm, sal+comm,
+        nvl(comm, 0),
+        sal + nvl(comm, 0)
+from emp;
+------------
+
+select ename, comm, nvl2(comm, 'O', 'X')
+from emp;
