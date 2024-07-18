@@ -1,0 +1,2 @@
+select job, substr(job, 1, 2), substr(job, 3, 2), substr(job, 5, 1)
+from emp;
