@@ -1,0 +1,21 @@
+- INSTR(’문자열’, ’찾고자 하는 값’)
+    
+    ```csharp
+    select instr('HELLO ORACLE!','O')
+    from DUAL;
+    ```
+    
+    SQL은 0부터 시작하는게 아니라 1부터 시작한다
+    
+    ```csharp
+    select instr('HELLO ORACLE!','LO')
+    from DUAL;
+    ```
+    
+    여러개 넣어도 되고, 한글도 된다!
+-----------------
+활용
+INSTR(’문자열’, ’찾고자 하는 값’,n ,m) - n부터 m번째의 값.(m개 아님 m번째임)
+
+select instr('HELLO ORACLE!','L',2,3)
+from DUAL;
