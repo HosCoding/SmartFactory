@@ -1,0 +1,13 @@
+select sysdate, to_char(sysdate), to_char(sysdate, 'yyyy/mm/dd hh24:mi:ss')
+from emp;
+-----------
+
+select  sysdate,
+        to_char(sysdate, 'yyyy/mm/dd hh24:mi:ss'),
+        to_char(sysdate, 'mm') as mm,
+        to_char(sysdate, 'mon') as mon,
+        to_char(sysdate, 'month') as month,
+        to_char(sysdate, 'dd') as dd,
+        to_char(sysdate, 'dy') as dy,
+        to_char(sysdate, 'day') as day
+from emp;
