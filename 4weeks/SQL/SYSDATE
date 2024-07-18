@@ -1,0 +1,21 @@
+select  sysdate,
+        sysdate -1 as 어제,
+        sysdate +1 as 내일
+from dual;
+
+---------
+
+--- 입사 3주년
+select  sysdate,
+        add_months(sysdate, 3)
+from dual;
+--- 입사 10주년
+select  sysdate,
+        add_months(sysdate, 120) as 입사10주년
+from dual;
+--- 마지막 날짜, 다음 날짜
+select  sysdate, 
+        next_day(sysdate, '월요일'),
+        last_day(sysdate),
+        last_day(to_date('24/02/10'))
+from dual;
