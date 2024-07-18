@@ -1,0 +1,5 @@
+SELECT empno, ename, empno + '500'
+from emp;
+---------------------
+select 'abcd' || to_char(empno)
+from emp;
