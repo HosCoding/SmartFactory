@@ -1,0 +1,35 @@
+- MINUS 차집합
+    
+    ```csharp
+    SELECT EMPNO, ENAME, SAL, DEPTNO FROM EMP
+    MINUS
+    SELECT EMPNO, ENAME, SAL, DEPTNO FROM EMP WHERE DEPTNO = 10;
+    ```
+    
+    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/805c32d3-0665-46d2-ac44-454009efd488/f7c440b9-4aa6-486e-9e88-1ae909be477d/Untitled.png)
+    
+    위의 값에서
+    
+    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/805c32d3-0665-46d2-ac44-454009efd488/7ce251b2-2a51-4d4b-94ee-c3218de15432/Untitled.png)
+    
+    DEPTNO가 10인 값을 뺀다.
+    
+    그럼 결과로 
+    
+    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/805c32d3-0665-46d2-ac44-454009efd488/f663a1a3-62ba-49f6-a868-f95b648bf89e/Untitled.png)
+    
+    다음과 같이 나온다.
+
+--
+
+- INTERSECT 교집합
+    
+    ```csharp
+    SELECT EMPNO, ENAME, SAL, DEPTNO FROM EMP
+    INTERSECT
+    SELECT EMPNO, ENAME, SAL, DEPTNO FROM EMP WHERE DEPTNO = 10;
+    ```
+    
+    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/805c32d3-0665-46d2-ac44-454009efd488/2f1cd213-017f-4c5a-b7d5-2bd0cd5b9236/Untitled.png)
+    
+    교집합인 부분이 나타나게 된다.
