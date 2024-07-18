@@ -1,0 +1,6 @@
+SELECT sal,
+        to_char(sal, '$999,999') as 달러,
+        to_char(sal, 'L999,999') as 원화,
+        to_char(sal, '999,999.00') as 소수점,
+        to_char(sal, '0999999.99') as 냥
+from emp;
