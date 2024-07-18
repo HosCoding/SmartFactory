@@ -1,0 +1,25 @@
+- 
+    
+    ```csharp
+    SELECT EMPNO, ENAME, SAL, DEPTNO FROM EMP WHERE DEPTNO = 10
+    UNION
+    SELECT EMPNO, ENAME, SAL, DEPTNO FROM EMP WHERE DEPTNO = 20;
+    ```
+    
+    두 개를 문장을 합칠 때 사용 (단, 원소가 같아야 하고, 순서도 동일 해야 함)
+
+-------------
+
+- 
+    
+    ```csharp
+    SELECT EMPNO, ENAME, SAL, DEPTNO FROM EMP WHERE DEPTNO = 10
+    UNION
+    SELECT SAL, JOB, DEPTNO, SAL FROM EMP WHERE DEPTNO = 20;
+    ```
+    
+    얘는 다른데도 결과가 나옴
+    
+    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/805c32d3-0665-46d2-ac44-454009efd488/f5e3fea1-2f76-4365-bd8e-511f6c7fdc06/Untitled.png)
+    
+    그 이유는 양쪽 다 숫자가 저장된 데이터이기 때문에 연결이 된다.
