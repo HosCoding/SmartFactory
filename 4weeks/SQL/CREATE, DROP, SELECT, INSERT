@@ -1,0 +1,25 @@
+CREATE
+---------------------------
+CREATE TABLE EMP_DDL (
+    EMPNO    NUMBER(4),
+    ENAME    VARCHAR2(10),
+    JOB      VARCHAR2(9)
+);
+--------------------------
+
+DROP
+--------------------------
+DROP TABLE EMP_DDL;
+--------------------------
+
+SELECT
+--------------------------
+SELECT * FROM EMP_DDL;
+--------------------------
+
+INSERT
+--------------------------
+  INSERT INTO EMP_DDL
+VALUES (1, 'TOM', 'MANAGER');
+--------------------------
+  
