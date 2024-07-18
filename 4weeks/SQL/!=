@@ -1,0 +1,3 @@
+SELECT * FROM EMP WHERE SAL != 3000;
+--------------------------
+SELECT * FROM EMP WHERE NOT SAL = 3000;
