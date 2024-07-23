@@ -1,0 +1,215 @@
+using Oracle.ManagedDataAccess.Client;
+using System.Net.Sockets;
+using System.Security.Cryptography;
+
+namespace MiniConsoleProgramAPP01
+{
+    class ID_CARD()
+    {
+        public int ID_1 { get; set; }
+        public string Name { get; set; }
+        public string HP { get; set; }
+        public string Mail { get; set; }
+        public string Company { get; set; }
+        public string Address { get; set; }
+    }
+    class NewID_CARD : ID_CARD
+
+    {
+        public NewID_CARD(int id_1, string name, string hp, string company, string mail, string address)
+        {
+            ID_1 = id_1;
+            Name = name;
+            HP = hp;
+            Mail = mail;
+            Company = company;
+            Address = address;
+        }
+    }
+
+    internal class Program
+    {
+            static void Main(string[] args)
+            {
+
+                string strConn = "Data Source=(DESCRIPTION=" +
+                    "(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)" +
+                    "(HOST=localhost)(PORT=9000)))" +
+                    "(CONNECT_DATA=(SERVER=DEDICATED)" +
+                    "(SERVICE_NAME=xe)));" +
+                    "User Id=SCOTT2;Password=TIGER;";
+
+                //1.연결 객체 만들기 - Client
+                OracleConnection conn = new OracleConnection(strConn);
+                //2.데이터베이스 접속을 위한 연결
+                conn.Open();
+                //3.서버와 함께 신나게 놀기
+                //3.1 Query 명령객체 만들기
+                OracleCommand cmd = new OracleCommand();
+                cmd.Connection = conn; //연결객체와 연동
+            cmd.CommandText = "DROP TABLE BUISINESSCARDS";
+            cmd.ExecuteNonQuery();
+                cmd.CommandText = "CREATE TABLE BUISINESSCARDS(" +
+                                  "ID NUMBER PRIMARY KEY," +
+                                  "NAME VARCHAR2(50) NOT NULL," +
+                                  "HP VARCHAR2(20) NOT NULL," +
+                                  " EMAIL VARCHAR2(50)," +
+                                  "COMPANY VARCHAR2(100)," +
+                                  "ADDRESS VARCHAR2(200)" +
+                              ")";
+                cmd.ExecuteNonQuery();
+
+                List<ID_CARD> ID = new List<ID_CARD>();
+
+                int a;
+                do
+                {
+                    Console.WriteLine("=======================");
+                    Console.WriteLine("1. 명함 추가");
+                    Console.WriteLine("2. 명함 목록 보기");
+                    Console.WriteLine("3. 명함 수정");
+                    Console.WriteLine("4. 명함 삭제");
+                    Console.WriteLine("5. 명함 검색");
+                    Console.WriteLine("6. 종료");
+                    Console.WriteLine("=======================");
+                    a = int.Parse(Console.ReadLine());
+                    switch (a)
+                    {
+
+                        case 1:
+                            Console.WriteLine("=======================");
+                            Console.Write("ID : ");
+                            int id_1 = int.Parse(Console.ReadLine());
+                            Console.Write("이름 : ");
+                            string name = Console.ReadLine();
+                            Console.Write("전화번호 : ");
+                            string hp = Console.ReadLine();
+                            Console.Write("이메일 : ");
+                            string mail = Console.ReadLine();
+                            Console.Write("회사 : ");
+                            string company = Console.ReadLine();
+                            Console.Write("주소 : ");
+                            string address = Console.ReadLine();
+                            Console.WriteLine("=======================");
+
+                            NewID_CARD id = new NewID_CARD(id_1, name, hp, mail, company, address);
+
+                            ID.Add(id);
+                            cmd.CommandText = $"INSERT INTO BUISINESSCARDS (ID, NAME, HP, EMAIL, COMPANY, ADDRESS) VALUES('{id_1}','{name}', '{hp}', '{mail}', '{company}', '{address}')";
+
+                            cmd.ExecuteNonQuery();
+                            break;
+
+                        case 2:
+                            Console.WriteLine("=======================");
+                            Console.WriteLine("명함 목록");
+                            Console.WriteLine("=======================");
+                            cmd.CommandText = "SELECT * FROM BUISINESSCARDS";
+                            cmd.ExecuteNonQuery();
+                            OracleDataReader rdr = cmd.ExecuteReader();
+                            //코드
+                            foreach (NewID_CARD i in ID)
+
+                            {
+                                Console.WriteLine("=======================");
+                                Console.WriteLine($" ID : {i.ID_1}");
+                                Console.WriteLine($"이름 : {i.Name}");
+                                Console.WriteLine($"번호 : {i.HP}");
+                                Console.WriteLine($"메일 : {i.Mail}");
+                                Console.WriteLine($"회사 : {i.Company}");
+                                Console.WriteLine($"주소 : {i.Address}");
+                                Console.WriteLine("=======================");
+
+                            }
+                        break;
+
+                        case 3:
+                            Console.WriteLine("=======================");
+                            Console.WriteLine("명함 수정");
+                            Console.WriteLine("=======================");
+                            Console.Write("수정할 명함의 번호를 입력하세요 : ");
+
+                            string fixnumber = Console.ReadLine();
+                            for (int i = 0; i < ID.Count; i++)
+                            {
+                                if (ID[i].HP == fixnumber)
+                                {
+                                    ID.RemoveAt(i);
+                                    Console.Write("수정된 ID을 입력하세요 : ");
+                                    ID[i].ID_1 = int.Parse(Console.ReadLine());
+                                    Console.Write("수정된 이름을 입력하세요 : ");
+                                    ID[i].Name = Console.ReadLine();
+                                    Console.Write("수정된 번호를 입력하세요 : ");
+                                    ID[i].HP = Console.ReadLine();
+                                    Console.Write("수정된 이메일을 입력하세요 : ");
+                                    ID[i].Mail = Console.ReadLine();
+                                    Console.Write("수정된 회사를 입력하세요 : ");
+                                    ID[i].Company = Console.ReadLine();
+                                    Console.Write("수정된 주소를 입력하세요 : ");
+                                    ID[i].Address = Console.ReadLine();
+                                }
+                            cmd.CommandText = $"UPDATE BUISINESSCARDS SET ID = {ID[i].ID_1}, NAME = {ID[i].Name}, HP = {ID[i].HP}," +
+                                $"EMAIL = {ID[i].Mail}, COMPANY = {ID[i].Company}, ADDRESS = {ID[i].Address}";
+                            cmd.ExecuteNonQuery();
+                            }
+                            break;
+                        case 4:
+                            Console.WriteLine("=======================");
+                            Console.WriteLine("명함 삭제");
+                            Console.WriteLine("=======================");
+                            Console.Write("삭제할 명함의 번호를 입력하세요 : ");
+
+                            string deleteId = Console.ReadLine();
+                            for (int i = 0; i < ID.Count; i++)
+                            {
+                                if (ID[i].HP == deleteId)
+                                {
+                                    ID.RemoveAt(i);
+                                }
+                            }
+
+
+                            Console.WriteLine("=======================");
+                            Console.Write("정말 삭제 하시겠습니까? (y/n) :");
+                            string word = Console.ReadLine();
+                        if (word.ToLower() == "n")
+                        {
+                            Console.WriteLine("삭제를 취소합니다.");
+                            break;
+                        }
+                        else if (word.ToLower() == "y")
+                        {
+                            cmd.CommandText = "DELETE FROM BUINESSCARDS" + $"WHERE ID = {a}";
+                            cmd.Parameters.Add(new OracleParameter("ID", a));
+                            cmd.ExecuteNonQuery();
+
+                            Console.WriteLine($"{a}번 명함이 삭제되었습니다.");
+                            continue;
+                        }
+                        else
+                        {
+                            Console.WriteLine("값을 다시 작성해주세요");
+                        }
+
+                            break;
+                        case 5:
+                            Console.WriteLine("=======================");
+                            Console.WriteLine("명함 검색");
+                            Console.WriteLine("=======================");
+                            Console.WriteLine("검색할 이름을 입력하세요");
+                            Console.WriteLine("=======================");
+                            
+                            break;
+                        case 6:
+                            Console.WriteLine("종료");
+                            break;
+                        default:
+                            Console.WriteLine("1~6의 숫자를 눌러주세요");
+                            break;
+                    }
+                } while (a != 6);
+            }
+        }
+    }
+
+
