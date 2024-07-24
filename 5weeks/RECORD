@@ -1,0 +1,41 @@
+-- 17-1
+DECLARE
+-- 레코드 선언
+    TYPE REC_DEPT IS RECORD(
+        deptno NUMBER(2) NOT NULL := 99,
+        dname DEPT.DNAME%TYPE,
+        loc DEPT.LOC%TYPE
+    );
+    dept_rec REC_DEPT;
+BEGIN
+    dept_rec.deptno := 99;
+    dept_rec.dname := 'DATABASE';
+    dept_rec.loc := 'SEOUL';
+    DBMS_OUTPUT.PUT_LINE(dept_rec.deptno);
+    DBMS_OUTPUT.PUT_LINE(dept_rec.dname);
+    DBMS_OUTPUT.PUT_LINE(dept_rec.loc);
+END;
+/
+
+----------
+
+--레코드를 사용하여 UPDATE를 해보자.
+--부서테이블 99 부서 데이터를 객체 값으로 수정
+DECLARE
+    TYPE DEPTREC IS RECORD(
+    deptno NUMBER(3) NOT NULL := 80,
+    dname DEPT.DNAME%TYPE,
+    loc DEPT.LOC%TYPE
+    );
+    DEPT_REC DEPTREC;
+BEGIN
+    DEPT_REC.deptno := 50;
+    DEPT_REC.dname := 'DB';
+    DEPT_REC.loc := 'ANDONG';
+    
+    UPDATE DEPT_RECORD
+    SET ROW = deptrecord
+    WHERE DEPTNO = 99;
+
+END;
+/
