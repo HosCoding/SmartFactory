@@ -1,0 +1,7 @@
+DECLARE
+    BEGIN
+        FOR i IN REVERSE 0..4 LOOP
+             DBMS_OUTPUT.PUT_LINE('출력 : ' || i);
+        END LOOP;
+    END;
+/
