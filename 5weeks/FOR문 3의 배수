@@ -1,0 +1,21 @@
+DECLARE
+BEGIN
+    FOR i IN 1..10 LOOP
+        IF MOD(I,3) = 0 THEN
+            DBMS_OUTPUT.PUT_LINE('출력 : ' || i);
+        END IF;
+    END LOOP;
+END;
+/
+
+-------------
+
+DECLARE
+BEGIN
+    FOR i IN REVERSE 1..10 LOOP
+        IF MOD(I,3) = 0 THEN
+            DBMS_OUTPUT.PUT_LINE('출력 : ' || i);
+        END IF;
+    END LOOP;
+END;
+/
