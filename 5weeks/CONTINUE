@@ -1,0 +1,8 @@
+--16-21 FOR LOOP 안에 CONTINUE
+BEGIN
+    FOR I IN 0..8 LOOP
+        CONTINUE WHEN MOD(I,2) = 1;
+        DBMS_OUTPUT.PUT_LINE(i);
+    END LOOP;
+END;
+/
