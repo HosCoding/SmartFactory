@@ -1,0 +1,227 @@
+using Oracle.ManagedDataAccess.Client;
+using System.Net;
+using System.Runtime.InteropServices;
+using System.Xml.Linq;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
+namespace MiniProject0805
+{
+    internal class Program
+    {
+        class Factory()
+        {
+            public int Number { get; set; }
+            public string C_Name { get; set; }
+            public string P_Name { get; set; }
+            public string Kind { get; set; }
+            public string Cup { get; set; }
+            public int ID { get; set; }
+
+        }
+        class NewFactory : Factory
+        {
+            public NewFactory(int id, int number, string c_name, string p_name, string kind, string cup)
+            {
+                Number = number;
+                C_Name = c_name;
+                P_Name = p_name;
+                Kind = kind;
+                Cup = cup;
+                ID = id;
+            }
+        }
+        static void Main(string[] args)
+        {
+            string strConn = "Data Source=(DESCRIPTION=" +
+                    "(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)" +
+                    "(HOST=localhost)(PORT=9000)))" +
+                    "(CONNECT_DATA=(SERVER=DEDICATED)" +
+                    "(SERVICE_NAME=xe)));" +
+                    "User Id=SCOTT2;Password=TIGER;";
+
+            //1.연결 객체 만들기 - Client
+            OracleConnection conn = new OracleConnection(strConn);
+            //2.데이터베이스 접속을 위한 연결
+            conn.Open();
+            //3.서버와 함께 신나게 놀기
+            //3.1 Query 명령객체 만들기
+            OracleCommand cmd = new OracleCommand();
+            cmd.Connection = conn; //연결객체와 연동
+            cmd.CommandText = "DROP TABLE RamenFactory";
+            cmd.ExecuteNonQuery();
+            cmd.CommandText = "CREATE TABLE RamenFactory(" +
+                              "ID NUMBER PRIMARY KEY," +
+                              "NUMBER1 NUMBER(20) NOT NULL," +
+                              "C_NAME VARCHAR2(20) NOT NULL," +
+                              "P_NAME VARCHAR2(20) NOT NULL," +
+                              "KIND VARCHAR2(50) NOT NULL," +
+                              "CUP VARCHAR2(3)" +
+                          ")";
+            cmd.ExecuteNonQuery();
+            List<Factory> MiniFactory = new List<Factory>();
+
+            int A;
+            do
+            {
+                Console.WriteLine("=======================");
+                Console.WriteLine("1. 제품 추가");
+                Console.WriteLine("2. 제품 목룍 보기");
+                Console.WriteLine("3. 제품 수정");
+                Console.WriteLine("4. 제품 삭제");
+                Console.WriteLine("5. 제품 검색");
+                Console.WriteLine("6. 종료");
+                Console.WriteLine("=======================");
+                A = int.Parse(Console.ReadLine());
+                switch (A)
+                {
+                    case 1:
+                        Console.WriteLine("=======================");
+                        Console.Write("ID : ");
+                        int id = int.Parse(Console.ReadLine());
+                        Console.Write("번호 : ");
+                        int number = int.Parse(Console.ReadLine());
+                        Console.Write("회사 명 : ");
+                        string c_name = Console.ReadLine();
+                        Console.Write("제품 명 : ");
+                        string p_name = Console.ReadLine();
+                        Console.Write("종류 : ");
+                        string kind = Console.ReadLine();
+                        Console.Write("컵라면 o/x : ");
+                        string cup = Console.ReadLine();
+                        Console.WriteLine("=======================");
+
+                        NewFactory mf = new NewFactory(id, number, c_name, p_name, kind, cup);
+                        MiniFactory.Add(mf);
+                        cmd.CommandText = $"INSERT INTO RamenFactory (ID, NUMBER1, C_NAME, P_NAME, KIND, CUP) VALUES('{id}','{number}', '{c_name}', '{p_name}', '{kind}', '{cup}')";
+
+                        cmd.ExecuteNonQuery();
+                        break;
+                    case 2:
+                        Console.WriteLine("=======================");
+                        Console.WriteLine("제품 목록");
+                        Console.WriteLine("=======================");
+                        //코드
+                        foreach (NewFactory i in MiniFactory)
+                        {
+                            Console.WriteLine("=======================");
+                            Console.WriteLine($"ID : {i.ID}");
+                            Console.WriteLine($"번호 : {i.Number}");
+                            Console.WriteLine($"회사 명 : {i.C_Name}");
+                            Console.WriteLine($"제품 명 : {i.P_Name}");
+                            Console.WriteLine($"종류 : {i.Kind}");
+                            Console.WriteLine($"컵라면 o/x : {i.Cup}");
+                            Console.WriteLine("=======================");
+                        }
+                        cmd.CommandText = $"SELECT * FROM RamenFactory";
+                        break;
+
+                    case 3:
+                        Console.WriteLine("=======================");
+                        Console.WriteLine("제품 수정");
+                        Console.WriteLine("=======================");
+                        Console.Write("수정할 제품의 ID번호를 입력하세요 : ");
+                        int fixId = int.Parse(Console.ReadLine());
+                        bool found = false;
+
+                        for (int i = 0; i < MiniFactory.Count; i++)
+                        {
+                            if (MiniFactory[i].ID == fixId)
+                            {
+                                found = true;
+                                Console.Write("수정된 번호를 입력하세요 : ");
+                                MiniFactory[i].Number = int.Parse(Console.ReadLine());
+                                Console.Write("수정된 회사 명을 입력하세요 : ");
+                                MiniFactory[i].C_Name = Console.ReadLine();
+                                Console.Write("수정된 제품 명을 입력하세요 : ");
+                                MiniFactory[i].P_Name = Console.ReadLine();
+                                Console.Write("수정된 종류를 입력하세요 : ");
+                                MiniFactory[i].Kind = Console.ReadLine();
+                                Console.Write("수정된 컵라면 o/x 를 입력하세요 : ");
+                                MiniFactory[i].Cup = Console.ReadLine();
+
+                                cmd.CommandText = $"UPDATE RamenFactory SET NUMBER1 = {MiniFactory[i].Number}, C_NAME = '{MiniFactory[i].C_Name}', P_NAME = '{MiniFactory[i].P_Name}', KIND = '{MiniFactory[i].Kind}', CUP = '{MiniFactory[i].Cup}' WHERE ID = {MiniFactory[i].ID}";
+                                cmd.ExecuteNonQuery();
+                                cmd.ExecuteNonQuery();
+                                break;
+                            }
+                        }
+
+                        if (!found)
+                        {
+                            Console.WriteLine("해당 ID의 제품을 찾을 수 없습니다.");
+                        }
+                        break;
+                    case 4:
+                        Console.WriteLine("=======================");
+                        Console.WriteLine("제품 삭제");
+                        Console.WriteLine("=======================");
+                        Console.Write("삭제할 제품의 번호를 입력하세요 : ");
+
+                        int deleteId = int.Parse(Console.ReadLine());
+                        for (int i = 0; i < MiniFactory.Count; i++)
+                        {
+                            if (MiniFactory[i].Number == deleteId)
+                            {
+                                MiniFactory.RemoveAt(i);
+                            }
+                        }
+
+
+                        Console.WriteLine("=======================");
+                        Console.Write("정말 삭제 하시겠습니까? (y/n) :");
+                        string word = Console.ReadLine();
+                        if (word.ToLower() == "n")
+                        {
+                            Console.WriteLine("삭제를 취소합니다.");
+                            break;
+                        }
+                        else if (word.ToLower() == "y")
+                            continue;
+                        else
+                        {
+                            Console.WriteLine("값을 다시 작성해주세요");
+                        }
+                        cmd.CommandText = $"DELETE FROM RamenFactory WHERE ID = '{word}' ";
+                        cmd.ExecuteNonQuery();
+                        break;
+                    case 5:
+                        Console.WriteLine("=======================");
+                        Console.WriteLine("명함 검색");
+                        Console.WriteLine("=======================");
+                        Console.WriteLine("검색할 이름을 입력하세요");
+                        Console.WriteLine("=======================");
+                        int search = int.Parse(Console.ReadLine());
+                        Console.WriteLine("============================");
+                        Console.WriteLine("검색 결과");
+                        cmd.CommandText = $"SELECT * FROM RamenFactory\r\n\r\nWHERE ID LIKE '{search}'";
+                        cmd.ExecuteNonQuery();
+                        OracleDataReader der = cmd.ExecuteReader();
+                        while (der.Read())
+                        {
+                            id = int.Parse(der["ID"].ToString());
+                            number = int.Parse(der["NUMBER1"].ToString());
+                            c_name = der["C_NAME"] as string;
+                            p_name = der["P_NAME"] as string;
+                            kind = der["KIND"] as string;
+                            cup = der["CUP"] as string;
+                            Console.WriteLine($"{id} \r\n {number} \r\n {c_name} \r\n {p_name} \r\n {kind} \r\n {cup} ");
+                        }
+                        Console.WriteLine();
+                        break;
+                       
+                    case 6:
+                        Environment.Exit(0);
+                        conn.Close();
+                        break;
+                    default:
+                        Console.WriteLine("1~6의 숫자를 눌러주세요");
+                        break;
+                }
+
+
+
+            } while (A != 6);
+
+        }
+    }
+}
