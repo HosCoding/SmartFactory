@@ -1,0 +1,81 @@
+using Oracle.ManagedDataAccess.Client;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace WinFormsApp14
+{
+    public partial class Form2 : Form
+    {
+        static void Db()
+        {
+
+
+
+
+        }
+        private Form1 frm1;
+        private string str;
+        public Form2(object frm, string _str)
+        {
+
+            InitializeComponent();
+            frm1 = (Form1)frm;
+            str = _str;
+        }
+
+        private void Form2_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string strConn = "Data Source=(DESCRIPTION=" +
+                    "(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)" +
+                    "(HOST=localhost)(PORT=9000)))" +
+                    "(CONNECT_DATA=(SERVER=DEDICATED)" +
+                    "(SERVICE_NAME=xe)));" +
+                    "User Id=SCOTT2;Password=TIGER;";
+
+            //1.연결 객체 만들기 - Client
+            OracleConnection conn = new OracleConnection(strConn);
+            //2.데이터베이스 접속을 위한 연결
+            conn.Open();
+            //3.서버와 함께 신나게 놀기
+            //3.1 Query 명령객체 만들기
+            OracleCommand cmd = new OracleCommand();
+            cmd.Connection = conn; //연결객체와 연동
+            cmd.CommandText = "Drop Table Customer";
+            cmd.ExecuteNonQuery();
+
+            cmd.CommandText = "CREATE TABLE Customer( " +
+                             "LOGIN_ID       VARCHAR2(20) NOT NULL PRIMARY KEY, " +
+                             "LOGIN_PWD    VARCHAR2(20) NOT NULL, " +
+                             "CNAME    VARCHAR2(20) NOT NULL, " +
+                             "HP      VARCHAR2(20), " +
+                             "ADDRESS      VARCHAR2(50))";
+            cmd.ExecuteNonQuery();
+
+            if (txtPWD.Text == txtPWD_RE.Text)
+            {
+                cmd.CommandText = "INSERT INTO Customer (LOGIN_ID, LOGIN_PWD, CNAME, HP, ADDRESS)" +
+                                  $"VALUES ('{txtID}', '{txtPWD}', '{txtName}', '{txtHP}', '{txtAddress})";
+                cmd.ExecuteNonQuery();
+
+                MessageBox.Show("회원 가입이 완료되었습니다.");
+            }
+            else
+            {
+                MessageBox.Show("비밀번호를 다시 확인해주세요");
+            }
+            conn.Close();
+        }
+    }
+}
