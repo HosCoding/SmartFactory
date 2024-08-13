@@ -1,0 +1,506 @@
+using LanguageExt;
+using Oracle.ManagedDataAccess.Client;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
+using static System.Windows.Forms.DataFormats;
+
+namespace WinFormsApp14
+{
+    public partial class Form2 : Form   //공정 화면
+    {
+
+        public int timnum = 0;
+        public string name;    //주문한 제품 이름
+        public int ea;         // 주문한 제품 수량
+        private int progressValue = 0;
+        private int count = 1;
+        public bool flag = false;
+        public bool stopFlag = false;
+        public int flagF5 = 0;
+        Form1 frm1;     // HAS-A ((포함))
+        //Form5 form5;
+        Form5 frm5;
+        Random random = new Random();
+
+        public Form2() //디폴트 생성자
+        {
+            InitializeComponent();
+
+        }
+
+        private void MenuItem_MouseEnter(object sender, EventArgs e)
+        {
+            ToolStripMenuItem menuItem = sender as ToolStripMenuItem;
+
+
+            if (menuItem != null)
+            {
+                menuItem.ForeColor = Color.Yellow; // 마우스가 올라갔을 때 색상 변경
+            }
+        }
+
+        public class CustomProfessionalColors : ProfessionalColorTable  //menuStrip 선택시 배경 색 투명
+        {
+            public override Color MenuItemSelected
+            {
+                get { return Color.Transparent; } // 선택된 항목의 배경색을 투명하게 설정
+            }
+
+            public override Color MenuItemSelectedGradientBegin
+            {
+                get { return Color.Transparent; } // 선택된 항목의 그라디언트 시작 색상을 투명하게 설정
+            }
+
+            public override Color MenuItemSelectedGradientEnd
+            {
+                get { return Color.Transparent; } // 선택된 항목의 그라디언트 끝 색상을 투명하게 설정
+            }
+
+            public override Color MenuItemBorder
+            {
+                get { return Color.Transparent; } // 선택된 항목의 경계선을 투명하게 설정
+            }
+        }
+
+        private void MenuItem_MouseLeave(object sender, EventArgs e)
+        {
+            ToolStripMenuItem menuItem = sender as ToolStripMenuItem;
+            if (menuItem != null)
+            {
+                menuItem.ForeColor = Color.White; // 마우스가 떠나면 원래 색상으로 변경
+            }
+        }
+
+        //Form1에 접근하려면 Form1 속성 중 Modifiers를 private --> public으로 수정해 줘야 한다.
+
+        public Form2(object form)       //생성자를 하나 더 만듦
+        {
+            InitializeComponent();
+            frm1 = (Form1)form;
+            name = frm1.ProductName;
+            ea = frm1.ProductEa;
+            //form5 = new Form5();
+            //MessageBox.Show($"{name}, {ea}"); //확인용 메세지 박스
+            menuStrip1.Renderer = new ToolStripProfessionalRenderer(new CustomProfessionalColors());
+
+            // 각 MenuItem에 이벤트 핸들러 추가
+            foreach (ToolStripMenuItem menuItem in menuStrip1.Items)
+            {
+                menuItem.MouseEnter += MenuItem_MouseEnter;
+                menuItem.MouseLeave += MenuItem_MouseLeave;
+            }
+            foreach (ToolStripMenuItem menuItem in menuStrip1.Items)
+            {
+                menuItem.MouseEnter += MenuItem_MouseEnter;
+                menuItem.MouseLeave += MenuItem_MouseLeave;
+            }
+        }
+        public Form2(string str, Form1 form1)
+        {
+            this.frm1 = form1;
+
+        }
+        public void GongZang1() //임의적 오류 발생 코드
+        {
+            int rand = random.Next(45, 153);
+
+            if (!(rand >= 50 && rand <= 150))
+            {
+                pictureBox9.Visible = false;
+                pictureBox10.Visible = false;
+                pictureBox11.Visible = false;
+                pictureBox12.Visible = false;
+                pictureBox13.Visible = false;
+                pictureBox14.Visible = false;
+                pictureBox15.Visible = false;
+                pictureBox16.Visible = false;
+                stopFlag = true;
+                timer1.Stop();
+                MessageBox.Show($"해당 공정에서 오류입니다!");
+            }
+            else
+            {
+                //MessageBox.Show($"성공!");
+            }
+
+        }
+        public void DbmsCheck() //재고 수량 확인 로직
+        {
+            string strConn = "Data Source=(DESCRIPTION=" +
+                   "(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)" +
+                   "(HOST=localhost)(PORT=1521)))" +
+                   "(CONNECT_DATA=(SERVER=DEDICATED)" +
+                   "(SERVICE_NAME=xe)));" +
+                   "User Id=scott;Password=tiger;";
+
+            //1.연결 객체 만들기 - Client
+            OracleConnection conn = new OracleConnection(strConn);
+            //2.데이터베이스 접속을 위한 연결
+            conn.Open();
+            //3.1 Query 명령객체 만들기
+
+            OracleCommand cmd = new OracleCommand();
+            cmd.Connection = conn; //연결객체와 연동
+
+            cmd.CommandText = "SELECT * FROM Material ";
+            cmd.ExecuteNonQuery();
+
+            OracleDataReader reader = cmd.ExecuteReader();
+            int Dbea; string Dbname;
+
+            Form6 form6 = new Form6(this);
+            form6.upFlag = false;
+            form6.addFlag = true;
+            form6.checkFlag = true;
+            form6.Dbms();
+
+            while (reader.Read())
+            {
+                Dbea = int.Parse(reader["PEA"].ToString());
+                Dbname = reader["PNAME"] as string;
+
+                if (Dbname != "케이스")
+                {
+                    if ((Dbea - ea) < 0 && name == "15kVA")
+                    {
+                        flag = true;
+                    }
+                    else if ((Dbea - (ea * 2)) < 0 && name == "20kVA")
+                    {
+                        flag = true;
+                    }
+                    else if ((Dbea - (ea * 3)) < 0 && name == "50kVA")
+                    {
+                        flag = true;
+                    }
+                    else if ((Dbea - (ea * 4)) < 0 && name == "75kVA")
+                    {
+                        flag = true;
+                    }
+                    else if ((Dbea - (ea * 5)) < 0 && name == "100kVA")
+                    {
+                        flag = true;
+                    }
+                }
+                else if (Dbname == "케이스")
+                {
+                    if ((Dbea - ea) < 0)
+                    {
+                        flag = true;
+                    }
+                }
+            }
+            if (flag == true)
+            {
+
+                form6.upFlag = true;
+                form6.addFlag = false;
+                form6.checkFlag = true;
+
+                form6.oil.Checked = true;
+                form6.alcoil.Checked = true;
+                form6.gucoil.Checked = true;
+                form6.core.Checked = true;
+                form6.case1.Checked = true;
+                form6.smartFlag = true;
+                if (name == "15kVA")
+                    form6.numericUpDown1.Text = $"{ea * 1}";
+                else if (name == "20kVA")
+                    form6.numericUpDown1.Text = $"{ea * 2}";
+                else if (name == "50kVA")
+                    form6.numericUpDown1.Text = $"{ea * 3}";
+                else if (name == "75kVA")
+                    form6.numericUpDown1.Text = $"{ea * 4}";
+                else if (name == "100kVA")
+                    form6.numericUpDown1.Text = $"{ea * 5}";
+                form6.Dbms();
+            }
+
+            conn.Close();
+        }
+        private void Form2_Load(object sender, EventArgs e)
+        {
+
+            this.dataGridView1.Columns.Add("Name", "제품명");
+            this.dataGridView1.Columns.Add("Ea", "제품 수량");
+            //시작 시 gif 안보이게 하기
+            pictureBox9.Visible = false;
+            pictureBox10.Visible = false;
+            pictureBox11.Visible = false;
+            pictureBox12.Visible = false;
+            pictureBox13.Visible = false;
+            pictureBox14.Visible = false;
+            pictureBox15.Visible = false;
+            pictureBox16.Visible = false;
+
+            for (int i = 1; i <= 8; i++)
+            {
+                // "progressBar" + i 라는 이름의 컨트롤을 찾습니다.
+                Control[] controls = this.Controls.Find("progressBar" + i, true);
+                if (controls.Length > 0 && controls[0] is ProgressBar)
+                {
+                    ProgressBar progressBar = (ProgressBar)controls[0];
+                    progressBar.Minimum = 0;
+                    progressBar.Maximum = 100;
+                    progressBar.Value = 0;
+                }
+            }
+            timer1.Interval = 40; // 100 milliseconds
+            //gridview HeaderColor
+            dataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.Black;
+            dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dataGridView1.RowHeadersDefaultCellStyle.BackColor = Color.Black;
+            dataGridView1.RowHeadersDefaultCellStyle.ForeColor = Color.White;
+
+            menuStrip1.ForeColor = Color.White;
+        }
+
+        //재고 수량 확인 로직
+
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.dataGridView1.Rows.Clear();
+            this.dataGridView1.Rows.Add($"{name}", $"{ea}");
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (stopFlag == false)
+            {
+                flagF5 = 1;
+                DbmsCheck();
+            }
+            if (flag == false)
+            {
+
+                //form5 = new Form5(this);
+                frm5 = new Form5(this);
+                timer1.Start();
+            }
+            else
+            {
+                flag = false;
+                MessageBox.Show("재료가 부족합니다.");
+            }
+
+        }
+
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            Control[] controls = this.Controls.Find("progressBar" + count, true);
+            ProgressBar progressBar;
+            if (controls.Length > 0 && controls[0] is ProgressBar)
+            {
+                progressBar = (ProgressBar)controls[0];
+                progressValue += 1;
+
+                if (progressValue <= 100)
+                {
+                    progressBar.Value = progressValue;
+                    if (count == 1)
+                    {
+                        pictureBox9.Visible = true;
+                        label3.ForeColor = Color.Yellow;
+                    }
+                    else
+                    {
+                        pictureBox9.Visible = false;
+                        label3.ForeColor = SystemColors.Control;
+                    }
+                    if (count == 2)
+                    {
+                        pictureBox10.Visible = true;
+                        label4.ForeColor = Color.Yellow;
+                    }
+                    else
+                    {
+                        pictureBox10.Visible = false;
+                        label4.ForeColor = SystemColors.Control;
+                    }
+                    if (count == 3)
+                    {
+                        pictureBox11.Visible = true;
+                        label5.ForeColor = Color.Yellow;
+                    }
+                    else
+                    {
+                        pictureBox11.Visible = false;
+                        label5.ForeColor = SystemColors.Control;
+                    }
+                    if (count == 4)
+                    {
+                        pictureBox12.Visible = true;
+                        label6.ForeColor = Color.Yellow;
+                    }
+                    else
+                    {
+                        pictureBox12.Visible = false;
+                        label6.ForeColor = SystemColors.Control;
+                    }
+                    if (count == 5)
+                    {
+                        pictureBox13.Visible = true;
+                        label7.ForeColor = Color.Yellow;
+                    }
+                    else
+                    {
+                        pictureBox13.Visible = false;
+                        label7.ForeColor = SystemColors.Control;
+                    }
+                    if (count == 6)
+                    {
+                        pictureBox14.Visible = true;
+                        label8.ForeColor = Color.Yellow;
+                    }
+                    else
+                    {
+                        pictureBox14.Visible = false;
+                        label8.ForeColor = SystemColors.Control;
+                    }
+                    if (count == 7)
+                    {
+                        pictureBox15.Visible = true;
+                        label9.ForeColor = Color.Yellow;
+                    }
+                    else
+                    {
+                        pictureBox15.Visible = false;
+                        label9.ForeColor = SystemColors.Control;
+                    }
+                    if (count == 8)
+                    {
+                        pictureBox16.Visible = true;
+                        label10.ForeColor = Color.Yellow;
+                    }
+                    else
+                    {
+                        pictureBox16.Visible = false;
+                        label10.ForeColor = SystemColors.Control;
+                    }
+                }
+                else
+                {
+                    count++;
+                    progressValue = 0;
+                    GongZang1();
+
+                }
+                if (count > 8)
+                {
+                    pictureBox9.Visible = false;
+                    pictureBox10.Visible = false;
+                    pictureBox11.Visible = false;
+                    pictureBox12.Visible = false;
+                    pictureBox13.Visible = false;
+                    pictureBox14.Visible = false;
+                    pictureBox15.Visible = false;
+                    pictureBox16.Visible = false;
+
+                    count = 1;
+                    progressValue = 0;
+                    for (int i = 1; i <= 8; i++)
+                    {
+                        controls = this.Controls.Find("progressBar" + i, true);
+                        progressBar = (ProgressBar)controls[0];
+                        progressBar.Value = progressValue;
+
+                    }
+                    stopFlag = false;
+                    timer1.Stop();
+                    MessageBox.Show("진행완료!");
+                }
+                if (progressBar8.Value == 0)
+                {
+                    label10.ForeColor = Color.White;
+                }
+            }
+        }
+
+        private void 주문화면ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //this.Hide(); // 약간의 오류 있음 Hide 하면 종료해도 백그라운드로 계속 돌아감 
+            Form1 frm1 = new Form1();
+            frm1.Show(); //모달
+                         //frm1.Show(); //모달리스
+
+        }
+
+        private void 종료ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form1 frm1 = new Form1();
+            Form3 frm3 = new Form3();
+            Form4 frm4 = new Form4();
+            Form5 frm5 = new Form5();
+            Form6 frm6 = new Form6();
+            //frm1.Show();
+            frm1.Dispose();
+            frm3.Dispose();
+            frm4.Dispose();
+            frm5.Dispose();
+            frm6.Dispose();
+            this.Dispose();
+        }
+
+        private void 제품판매통계ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frm5 = new Form5(this);
+            frm5.Show();
+
+            //form5.Show(); //모달
+        }
+
+        private void 재고관리ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form6 frm6 = new Form6(this);
+            frm6.Show(); //모달
+        }
+
+        private void menuStrip1_MouseMove(object sender, MouseEventArgs e)
+        {
+            ToolStripMenuItem menuItem = sender as ToolStripMenuItem;
+            if (menuItem != null)
+            {
+                menuItem.ForeColor = Color.Yellow; // 마우스가 올라갔을 때 색상 변경
+
+
+            }
+        }
+
+        private void button1_MouseMove(object sender, MouseEventArgs e)
+        {
+            button1.ForeColor = Color.Yellow;
+        }
+
+        private void button1_MouseLeave(object sender, EventArgs e)
+        {
+            button1.ForeColor = Color.White;
+        }
+
+        private void productComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void 관리자명단ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            Form7 form7 = new Form7();
+            form7.Show();
+        }
+    }
+}
