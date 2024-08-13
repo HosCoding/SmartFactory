@@ -1,0 +1,162 @@
+using Oracle.ManagedDataAccess.Client;
+
+namespace WinFormsApp14
+{
+
+    public partial class Form1 : Form   // 주문 화면
+    {
+        public string ProductName { get; set; } //주문한 제품 이름
+        public int ProductEa { get; set; }     // 주문한 제품 수량
+        public Form1()
+        {
+            InitializeComponent();
+        }
+        static void Dbms()
+        {
+            string strConn = "Data Source=(DESCRIPTION=" +
+                "(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)" +
+                "(HOST=localhost)(PORT=1521)))" +
+                "(CONNECT_DATA=(SERVER=DEDICATED)" +
+                "(SERVICE_NAME=xe)));" +
+                "User Id=scott;Password=tiger;";
+            //1.연결 객체 만들기 - Client
+            OracleConnection conn = new OracleConnection(strConn);
+
+            //2.데이터베이스 접속을 위한 연결
+            conn.Open();
+
+            OracleCommand cmd = conn.CreateCommand();
+            cmd.Connection = conn;
+
+
+            //4. 리소스 반환 및 종료
+            conn.Close();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (kVA15.Checked == true)
+            {
+                ProductName = "15kVA";
+                ProductEa = int.Parse(orderCountText.Text);
+            }
+            else if (kVA20.Checked == true)
+            {
+                ProductName = "20kVA";
+                ProductEa = int.Parse(orderCountText.Text);
+            }
+            else if (kVA50.Checked == true)
+            {
+                ProductName = "50kVA";
+                ProductEa = int.Parse(orderCountText.Text);
+            }
+            else if (kVA75.Checked == true)
+            {
+                ProductName = "75kVA";
+                ProductEa = int.Parse(orderCountText.Text);
+            }
+            else if (kVA100.Checked == true)
+            {
+                ProductName = "100kVA";
+                ProductEa = int.Parse(orderCountText.Text);
+            }
+
+            MessageBox.Show("주문이 완료 되었습니다!");
+
+            Form2 frm2 = new Form2(this);
+            //this.Hide(); // 약간의 오류 있음 Hide 하면 종료해도 백그라운드로 계속 돌아감 
+            //frm2.ShowDialog(); //모달 
+            frm2.Show(); //모달리스
+
+            //색상 변경
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            Dbms();
+
+
+
+
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void kVA15_CheckedChanged(object sender, EventArgs e)
+        {
+            if (kVA15.Checked)
+            {
+                kVA15.ForeColor = Color.Yellow;
+            }
+            else
+            {
+                kVA15.ForeColor = SystemColors.Control; // 체크 해제 시 기본 색상으로 되돌림
+            }
+        }
+
+        private void kVA20_CheckedChanged(object sender, EventArgs e)
+        {
+            if (kVA20.Checked)
+            {
+                kVA20.ForeColor = Color.Yellow;
+            }
+            else
+            {
+                kVA20.ForeColor = SystemColors.Control; // 체크 해제 시 기본 색상으로 되돌림
+            }
+
+
+
+        }
+
+        private void kVA50_CheckedChanged(object sender, EventArgs e)
+        {
+            if (kVA50.Checked)
+            {
+                kVA50.ForeColor = Color.Yellow;
+            }
+            else
+            {
+                kVA50.ForeColor = SystemColors.Control; // 체크 해제 시 기본 색상으로 되돌림
+            }
+        }
+
+        private void kVA75_CheckedChanged(object sender, EventArgs e)
+        {
+            if (kVA75.Checked)
+            {
+                kVA75.ForeColor = Color.Yellow;
+            }
+            else
+            {
+                kVA75.ForeColor = SystemColors.Control; // 체크 해제 시 기본 색상으로 되돌림
+            }
+        }
+
+        private void kVA100_CheckedChanged(object sender, EventArgs e)
+        {
+            if (kVA100.Checked)
+            {
+                kVA100.ForeColor = Color.Yellow;
+            }
+            else
+            {
+                kVA100.ForeColor = SystemColors.Control; // 체크 해제 시 기본 색상으로 되돌림
+            }
+        }
+
+        private void orderButton_MouseMove(object sender, MouseEventArgs e)
+        {
+            orderButton.ForeColor = Color.Yellow;
+        }
+
+        private void orderButton_MouseLeave(object sender, EventArgs e)
+        {
+            orderButton.ForeColor = Color.White;
+        }
+    }
+}
