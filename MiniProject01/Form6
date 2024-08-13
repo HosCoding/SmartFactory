@@ -1,0 +1,392 @@
+using Oracle.ManagedDataAccess.Client;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Xml.Linq;
+
+namespace WinFormsApp14
+{
+    public partial class Form6 : Form   //재고 화면
+    {
+        public string ProductName { get; set; } //재료 이름
+        public int ProductEa { get; set; }     // 재료 수량
+        Form2 form2;
+        private string f2name;
+        private int f2ea;
+        public bool upFlag = false;
+        public bool addFlag = false;
+        public bool checkFlag = false;
+        public bool smartFlag = false;
+        public Form6()
+        {
+            InitializeComponent();
+        }
+        public Form6(Object form)
+        {
+            InitializeComponent();
+            form2 = (Form2)form;
+            f2name = form2.name;
+            f2ea = form2.ea;
+            this.dataGridView1.Columns.Add("No", "재료 번호");
+            this.dataGridView1.Columns.Add("Name", "재료 이름");
+            this.dataGridView1.Columns.Add("Ea", "재료 수량");
+        }
+
+        public void Dbms()
+        {
+            string strConn = "Data Source=(DESCRIPTION=" +
+                   "(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)" +
+                   "(HOST=localhost)(PORT=1521)))" +
+                   "(CONNECT_DATA=(SERVER=DEDICATED)" +
+                   "(SERVICE_NAME=xe)));" +
+                   "User Id=scott;Password=tiger;";
+
+            //1.연결 객체 만들기 - Client
+            OracleConnection conn = new OracleConnection(strConn);
+            //2.데이터베이스 접속을 위한 연결
+            conn.Open();
+            //3.1 Query 명령객체 만들기
+            OracleCommand cmd = new OracleCommand();
+            cmd.Connection = conn; //연결객체와 연동
+
+            //처음 테이블 생성시 사용
+            //cmd.CommandText = "CREATE TABLE Material(" +
+            //                  "PNO NUMBER(30) PRIMARY KEY, " +
+            //                  "PNAME VARCHAR2(30) NOT NULL, " +
+            //                  "PEA VARCHAR2(30))";
+
+            //cmd.CommandText = "INSERT INTO Material(PNO, PNAME, PEA) " +
+            //                   $"VALUES ({1}, '절연유', '100')";
+            //cmd.ExecuteNonQuery();
+            //cmd.CommandText = "INSERT INTO Material(PNO, PNAME, PEA) " +
+            //                  $"VALUES ({2}, '알루미늄 코일', '100')";
+            //cmd.ExecuteNonQuery();
+            //cmd.CommandText = "INSERT INTO Material(PNO, PNAME, PEA) " +
+            //                  $"VALUES ({3}, '구리 코일', '100')";
+            //cmd.ExecuteNonQuery();
+            //cmd.CommandText = "INSERT INTO Material(PNO, PNAME, PEA) " +
+            //                  $"VALUES ({4}, '코어', '100')";
+            //cmd.ExecuteNonQuery();
+            //cmd.CommandText = "INSERT INTO Material(PNO, PNAME, PEA) " +
+            //                  $"VALUES ({5}, '케이스', '100')";
+            //cmd.ExecuteNonQuery();
+
+
+            // 테이블 수정을 위한 요소
+            cmd.CommandText = "SELECT * FROM Material ";
+            cmd.ExecuteNonQuery();
+            OracleDataReader reader = cmd.ExecuteReader();
+            int Dbno = 0, Dbea = 0; string Dbname = "";
+
+            //재료 업데이트(사용) 로직
+            if (upFlag == false)
+            {
+                while (reader.Read())
+                {
+                    Dbea = int.Parse(reader["PEA"].ToString());
+                    Dbname = reader["PNAME"] as string;
+
+                    if (f2name == "15kVA")
+                    {
+                        if (Dbname == "케이스")
+                        {
+                            Dbea -= f2ea;
+                            cmd.CommandText = $"UPDATE Material SET PEA = '{Dbea}' WHERE PNAME = '{Dbname}'";
+                            cmd.ExecuteNonQuery();
+                        }
+                        else
+                        {
+                            Dbea -= f2ea;
+                            cmd.CommandText = $"UPDATE Material SET PEA = '{Dbea}' WHERE PNAME = '{Dbname}'";
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                    else if (f2name == "20kVA")
+                    {
+                        if (Dbname == "케이스")
+                        {
+                            Dbea -= f2ea;
+                            cmd.CommandText = $"UPDATE Material SET PEA = '{Dbea}' WHERE PNAME = '{Dbname}'";
+                            cmd.ExecuteNonQuery();
+                        }
+                        else
+                        {
+                            Dbea -= (f2ea * 2);
+                            cmd.CommandText = $"UPDATE Material SET PEA = '{Dbea}' WHERE PNAME = '{Dbname}'";
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                    else if (f2name == "50kVA")
+                    {
+                        if (Dbname == "케이스")
+                        {
+                            Dbea -= f2ea;
+                            cmd.CommandText = $"UPDATE Material SET PEA = '{Dbea}' WHERE PNAME = '{Dbname}'";
+                            cmd.ExecuteNonQuery();
+                        }
+                        else
+                        {
+                            Dbea -= (f2ea * 3);
+                            cmd.CommandText = $"UPDATE Material SET PEA = '{Dbea}' WHERE PNAME = '{Dbname}'";
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                    else if (f2name == "75kVA")
+                    {
+                        if (Dbname == "케이스")
+                        {
+                            Dbea -= f2ea;
+                            cmd.CommandText = $"UPDATE Material SET PEA = '{Dbea}' WHERE PNAME = '{Dbname}'";
+                            cmd.ExecuteNonQuery();
+                        }
+                        else
+                        {
+                            Dbea -= (f2ea * 4);
+                            cmd.CommandText = $"UPDATE Material SET PEA = '{Dbea}' WHERE PNAME = '{Dbname}'";
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                    else if (f2name == "100kVA")
+                    {
+                        if (Dbname == "케이스")
+                        {
+                            Dbea -= f2ea;
+                            cmd.CommandText = $"UPDATE Material SET PEA = '{Dbea}' WHERE PNAME = '{Dbname}'";
+                            cmd.ExecuteNonQuery();
+                        }
+                        else
+                        {
+                            Dbea -= (f2ea * 5);
+                            cmd.CommandText = $"UPDATE Material SET PEA = '{Dbea}' WHERE PNAME = '{Dbname}'";
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                    else { MessageBox.Show("앞의 if문 올 실행 안됨"); }
+                }//end of while //재료 업데이트(사용) 로직
+                cmd.CommandText = "COMMIT";
+            }
+
+
+            //재료 업데이트(추가) 로직
+
+            if (addFlag == false)
+            {
+                //Dbno = 0; Dbea = 0; Dbname = "";
+                cmd.CommandText = "SELECT * FROM Material ";
+                cmd.ExecuteNonQuery();
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Dbea = int.Parse(reader["PEA"].ToString());
+                    Dbname = reader["PNAME"] as string;
+
+                    ProductEa = int.Parse(numericUpDown1.Text);
+                    int ea = 0;
+                    if (oil.Checked == true && Dbname == "절연유")
+                    {
+                        ea = Dbea + ProductEa;
+                        //ProductName = "절연유";
+                        cmd.CommandText = $"UPDATE Material SET PEA = '{ea}' WHERE PNAME = '{Dbname}'";
+                        ea = 0;
+                        cmd.ExecuteNonQuery();
+                        oil.Checked = false;
+                    }
+                    if (alcoil.Checked == true && Dbname == "알루미늄 코일")
+                    {
+                        ea = Dbea + ProductEa;
+                        //ProductName = "알루미늄 코일";
+                        //ProductEa = int.Parse(numericUpDown1.Text);
+                        cmd.CommandText = $"UPDATE Material SET PEA = '{ea}' WHERE PNAME = '{Dbname}'";
+                        ea = 0;
+                        cmd.ExecuteNonQuery();
+                        alcoil.Checked = false;
+                    }
+                    if (gucoil.Checked == true && Dbname == "구리 코일")
+                    {
+                        ea = Dbea + ProductEa;
+                        //ProductName = "구리 코일";
+                        //ProductEa = int.Parse(numericUpDown1.Text);
+                        cmd.CommandText = $"UPDATE Material SET PEA = '{ea}' WHERE PNAME = '{Dbname}'";
+                        ea = 0;
+                        cmd.ExecuteNonQuery();
+                        gucoil.Checked = false;
+                    }
+                    if (core.Checked == true && Dbname == "코어")
+                    {
+                        ea = Dbea + ProductEa;
+                        //ProductName = "코어";
+                        //ProductEa = int.Parse(numericUpDown1.Text);
+                        cmd.CommandText = $"UPDATE Material SET PEA = '{ea}' WHERE PNAME = '{Dbname}'";
+                        ea = 0;
+                        cmd.ExecuteNonQuery();
+                        core.Checked = false;
+                    }
+                    if (case1.Checked == true && Dbname == "케이스")
+                    {
+                        if (smartFlag == true)
+                        {
+                            if (f2name == "15kVA")
+                                ea = Dbea + ProductEa;
+                            else if (f2name == "20kVA")
+                                ea = Dbea + (ProductEa / 2);
+                            else if (f2name == "50kVA")
+                                ea = Dbea + (ProductEa / 3);
+                            else if (f2name == "75kVA")
+                                ea = Dbea + (ProductEa / 4);
+                            else if (f2name == "100kVA")
+                                ea = Dbea + (ProductEa / 5);
+                        }
+                        else
+                        {
+                            ea = Dbea + ProductEa;
+                        }
+                        //ProductName = "케이스";
+                        //ProductEa = int.Parse(numericUpDown1.Text);
+                        cmd.CommandText = $"UPDATE Material SET PEA = '{ea}' WHERE PNAME = '{Dbname}'";
+                        ea = 0;
+                        cmd.ExecuteNonQuery();
+                        case1.Checked = false;
+                        smartFlag = false;
+                    }
+                }
+                cmd.CommandText = "COMMIT";
+                numericUpDown1.Text = "";
+            }//재료 업데이트(추가) 로직
+
+            //재료 조회 로직
+            if (checkFlag == false)
+            {
+                cmd.CommandText = "SELECT * FROM Material ";
+                cmd.ExecuteNonQuery();
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+
+                    Dbno = int.Parse(reader["PNO"].ToString());
+                    Dbea = int.Parse(reader["PEA"].ToString());
+                    Dbname = reader["PNAME"] as string;
+                    this.dataGridView1.Rows.Add($"{Dbno}", $"{Dbname}", $"{Dbea}");
+
+                }
+            }
+
+            //4. 리소스 반환 및 종료
+            cmd.CommandText = "COMMIT";
+            conn.Close();
+        }
+        private void button1_Click(object sender, EventArgs e)
+        {
+            upFlag = true;
+            checkFlag = true;
+            addFlag = false;
+
+            Dbms(); //재료 업뎃 이상함
+        }
+
+        private void Form6_Load(object sender, EventArgs e)
+        {
+            //gridview HeaderColor
+            dataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.Black;
+            dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dataGridView1.RowHeadersDefaultCellStyle.BackColor = Color.Black;
+            dataGridView1.RowHeadersDefaultCellStyle.ForeColor = Color.White;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            upFlag = true;
+            addFlag = true;
+            checkFlag = false;
+            dataGridView1.Rows.Clear();
+
+            Dbms();
+        }
+
+        private void button1_MouseMove(object sender, MouseEventArgs e)
+        {
+            button1.ForeColor = Color.Yellow;
+        }
+
+        private void button1_MouseLeave(object sender, EventArgs e)
+        {
+            button1.ForeColor = Color.White;
+        }
+
+        private void button2_MouseLeave(object sender, EventArgs e)
+        {
+            button2.ForeColor = Color.White;
+        }
+
+        private void button2_MouseMove(object sender, MouseEventArgs e)
+        {
+            button2.ForeColor = Color.Yellow;
+        }
+
+        private void oil_CheckedChanged(object sender, EventArgs e)
+        {
+            if (oil.Checked)
+            {
+                oil.ForeColor = Color.Yellow;
+            }
+            else
+            {
+                oil.ForeColor = SystemColors.Control; // 체크 해제 시 기본 색상으로 되돌림
+            }
+        }
+
+        private void alcoil_CheckedChanged(object sender, EventArgs e)
+        {
+            if (alcoil.Checked)
+            {
+                alcoil.ForeColor = Color.Yellow;
+            }
+            else
+            {
+                alcoil.ForeColor = SystemColors.Control; // 체크 해제 시 기본 색상으로 되돌림
+            }
+        }
+
+        private void gucoil_CheckedChanged(object sender, EventArgs e)
+        {
+            if (gucoil.Checked)
+            {
+                gucoil.ForeColor = Color.Yellow;
+            }
+            else
+            {
+                gucoil.ForeColor = SystemColors.Control; // 체크 해제 시 기본 색상으로 되돌림
+            }
+        }
+
+        private void core_CheckedChanged(object sender, EventArgs e)
+        {
+            if (core.Checked)
+            {
+                core.ForeColor = Color.Yellow;
+            }
+            else
+            {
+                core.ForeColor = SystemColors.Control; // 체크 해제 시 기본 색상으로 되돌림
+            }
+        }
+
+        private void case1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (case1.Checked)
+            {
+                case1.ForeColor = Color.Yellow;
+            }
+            else
+            {
+                case1.ForeColor = SystemColors.Control; // 체크 해제 시 기본 색상으로 되돌림
+            }
+        }
+    }
+}
