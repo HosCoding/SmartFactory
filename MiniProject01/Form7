@@ -1,0 +1,38 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace WinFormsApp14
+{
+    public partial class Form7 : Form
+    {
+        public Form7()
+        {
+            InitializeComponent();
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void Form7_Load(object sender, EventArgs e)
+        {
+            dataGridView2.Columns.Add("Role", "역할");
+            dataGridView2.Columns.Add("No", "학번");
+            dataGridView2.Columns.Add("Name", "이름");
+
+            dataGridView2.Rows.Add("계획서,통계", "20210714", "유다은");
+            dataGridView2.Rows.Add("전체 설계, DB연동", "20201071", "박상원");
+            dataGridView2.Rows.Add("다이어그램, 애니메이션", "20181021", "이형찬");
+            dataGridView2.Rows.Add("로그인, 총괄 디자인", "20191059", "채호성");
+            dataGridView2.Rows.Add("자료수집, 총괄 보조", "20181024", "전일준");
+        }
+    }
+}
