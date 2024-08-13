@@ -1,0 +1,157 @@
+using Oracle.ManagedDataAccess.Client;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+
+namespace WinFormsApp14
+{
+    public partial class Form3 : Form   //로그인 화면
+    {
+        private string password = ""; // 실제 비밀번호를 저장할 변수
+        public Form3()
+        {
+            InitializeComponent();
+        }
+
+        private void Form3_Load(object sender, EventArgs e)
+        {
+            txtPWD.PasswordChar = '\0'; // 기본적으로는 PasswordChar를 사용하지 않음
+
+            int selectionStart = txtPWD.SelectionStart; // 현재 커서 위치를 저장
+            int length = txtPWD.Text.Length;
+
+            // 입력된 비밀번호를 저장 (문자열이 추가된 경우)
+            if (length > password.Length && selectionStart > 0)
+            {
+                password += txtPWD.Text.Substring(selectionStart - 1, 1);
+            }
+            else if (length < password.Length) // 문자열이 삭제된 경우
+            {
+                password = password.Substring(0, length);
+            }
+
+            // 이전 문자들은 *로 변경하고 마지막 문자만 보이도록 설정
+            string maskedPassword = password.Length > 1
+                ? new string('*', password.Length - 1) + password.LastOrDefault()
+                : password;
+
+            // 텍스트박스에 *로 표시
+            txtPWD.TextChanged -= txtPWD_TextChanged; // 이벤트 핸들러를 일시적으로 제거
+            txtPWD.Text = maskedPassword;
+            txtPWD.TextChanged += txtPWD_TextChanged; // 이벤트 핸들러를 다시 추가
+
+            txtPWD.SelectionStart = selectionStart; // 커서를 마지막 위치로 복원
+
+        }
+        private void txtPWD_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+        private void txtID_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string strConn = "Data Source=(DESCRIPTION=" +
+                    "(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)" +
+                    "(HOST=localhost)(PORT=1521)))" +
+                    "(CONNECT_DATA=(SERVER=DEDICATED)" +
+                    "(SERVICE_NAME=xe)));" +
+                    "User Id=scott;Password=tiger;";
+
+
+
+            string ID = txtID.Text;
+            string PWD = password;
+
+
+
+
+            // Oracle 데이터베이스 연결 문자열 설정
+
+
+            // SQL 쿼리 정의
+
+            using (OracleConnection conn = new OracleConnection(strConn))
+            {
+
+                conn.Open();
+                try
+                {
+                    string query = "SELECT COUNT(*) FROM CUSTOMER WHERE LOGIN_ID = :ID AND LOGIN_PWD = :PWD";
+                    using (OracleCommand cmd = new OracleCommand(query, conn))
+                    {
+                        cmd.Connection = conn;
+                        // 매개변수 설정
+                        cmd.Parameters.Add(new OracleParameter("ID", ID));
+                        cmd.Parameters.Add(new OracleParameter("PWD", PWD));
+
+                        // 쿼리 실행 및 결과 확인
+                        int userCount = Convert.ToInt32(cmd.ExecuteScalar());
+
+
+
+                        if (userCount > 0)
+                        {
+                            MessageBox.Show("로그인 성공");
+                            Form1 frm = new Form1();
+                            frm.ShowDialog();
+                        }
+                        else
+                        {
+                            MessageBox.Show("아이디 또는 비밀번호가 일치하지 않습니다.");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("데이터베이스 연결 중 오류가 발생했습니다: " + ex.Message);
+                }
+
+
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Form4 frm4 = new Form4(this, "안녕하세요");
+            frm4.Show();
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_MouseMove(object sender, MouseEventArgs e)
+        {
+            button1.ForeColor = Color.Yellow;
+            
+        }
+
+        private void button1_MouseLeave(object sender, EventArgs e)
+        {
+            button1.ForeColor = Color.White;
+            
+        }
+
+        private void button2_MouseMove(object sender, MouseEventArgs e)
+        {
+            button2.ForeColor = Color.Yellow;
+        }
+
+        private void button2_MouseLeave(object sender, EventArgs e)
+        {
+            button2.ForeColor = Color.White;
+        }
+    }
+}
