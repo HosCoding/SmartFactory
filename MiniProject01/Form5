@@ -1,0 +1,252 @@
+using Oracle.ManagedDataAccess.Client;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
+using System.Xml.Linq;
+
+namespace WinFormsApp14
+{
+    public partial class Form5 : Form   // 통계 화면
+    {
+        private string f2Name;
+        private int f2Ea;
+        private string dbName;  //판매 통계 테이블 제품 이름
+        private int dbEa;       //판매 통계 테이블 제품 판매 개수
+        Form2 form2;
+        public Form5()
+        {
+            InitializeComponent();
+        }
+        public Form5(Object form)
+        {
+            InitializeComponent();
+            form2 = (Form2)form;
+            f2Name = form2.name;
+            f2Ea = form2.ea;
+        }
+        string strConn = "Data Source=(DESCRIPTION=" +
+                    "(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)" +
+                    "(HOST=localhost)(PORT=1521)))" +
+                    "(CONNECT_DATA=(SERVER=DEDICATED)" +
+                    "(SERVICE_NAME=xe)));" +
+                    "User Id=scott;Password=tiger;";
+        public void Dbmssale()
+        {
+            //cmd.CommandText = "DROP TABLE PRODUCT_SALE";
+            //cmd.ExecuteNonQuery();
+
+            //처음 테이블 생성시 사용
+            //cmd.CommandText = "CREATE TABLE PRODUCT_SALE(" +
+            //                  "PCode VARCHAR2(30) PRIMARY KEY, " +
+            //                  "PName VARCHAR2(30) NOT NULL, " +
+            //                  "PPrice NUMBER(30), " +
+            //                  "SalesQuantity NUMBER(30) DEFAULT 0, " +
+            //                  "SalesPrice NUMBER(30))";
+            //cmd.ExecuteNonQuery();
+
+            //테이블 데이터 삽입
+            //cmd.CommandText = "INSERT INTO PRODUCT_SALE (PCODE, PNAME, PPRICE, SALESQUANTITY, SALESPRICE) " +
+            //                      $"VALUES ('1', '15kVA', {150000}, {0}, {0})";
+            //cmd.ExecuteNonQuery();
+            //cmd.CommandText = "INSERT INTO PRODUCT_SALE (PCode, PName, PPrice, SalesQuantity, SalesPrice) " +
+            //                      $"VALUES ('2', '20kVA',{200000}, {0}, {0})";
+            //cmd.ExecuteNonQuery();
+            //cmd.CommandText = "INSERT INTO PRODUCT_SALE (PCode, PName, PPrice, SalesQuantity, SalesPrice) " +
+            //                      $"VALUES ('3', '50kVA', {500000}, {0}, {0})";
+            //cmd.ExecuteNonQuery();
+            //cmd.CommandText = "INSERT INTO PRODUCT_SALE (PCode, PName, PPrice, SalesQuantity, SalesPrice) " +
+            //                      $"VALUES ('4', '75kVA',{750000}, {0}, {0})";
+            //cmd.ExecuteNonQuery();
+            //cmd.CommandText = "INSERT INTO PRODUCT_SALE (PCode, PName, PPrice, SalesQuantity, SalesPrice) " +
+            //                      $"VALUES ('5', '100kVA',{1000000}, {0}, {0})";
+            //cmd.ExecuteNonQuery();
+
+            //cmd.CommandText = "COMMIT";
+            // cmd.ExecuteNonQuery();
+            //4. 리소스 반환 및 종료
+            //dataGridView에 db테이블 가져오기
+
+            using (OracleConnection conn = new OracleConnection(strConn))
+            {
+                try
+                {
+                    conn.Open();
+                    string query = "SELECT PCODE, PNAME, PPRICE, SALESQUANTITY, SALESPRICE FROM PRODUCT_SALE";
+                    OracleDataAdapter adapter = new OracleDataAdapter(query, conn);
+
+                    DataTable dataTable = new DataTable();
+
+                    OracleCommand cmd = new OracleCommand(query, conn);
+
+                    OracleDataReader dataReader;
+
+                    if (form2.flagF5 == 1)
+                    {
+                        dataReader = cmd.ExecuteReader();
+                        int eaSum = 0, priceSum = 0;
+                        while (dataReader.Read())
+                        {
+                            dbName = dataReader.GetString("PNAME");
+                            dbEa = dataReader.GetInt32("SALESQUANTITY");
+                            if (f2Name == "15kVA" && dbName == "15kVA")
+                            {
+                                eaSum = dbEa + f2Ea;
+                                priceSum = eaSum * 150000;
+                                cmd.CommandText = $"UPDATE PRODUCT_SALE SET SALESQUANTITY = {eaSum},SALESPRICE = {priceSum} WHERE PNAME = '15kVA'";
+                                cmd.ExecuteNonQuery();
+                                break;
+                            }
+                            else if (f2Name == "20kVA" && dbName == "20kVA")
+                            {
+                                eaSum = dbEa + f2Ea;
+                                priceSum = eaSum * 200000;
+                                cmd.CommandText = $"UPDATE PRODUCT_SALE SET SALESQUANTITY = {eaSum},SALESPRICE = {priceSum}  WHERE PNAME = '20kVA'";
+                                cmd.ExecuteNonQuery();
+                                break;
+                            }
+                            else if (f2Name == "50kVA" && dbName == "50kVA")
+                            {
+                                eaSum = dbEa + f2Ea;
+                                priceSum = eaSum * 500000;
+                                cmd.CommandText = $"UPDATE PRODUCT_SALE SET SALESQUANTITY = {eaSum},SALESPRICE = {priceSum} WHERE PNAME = '50kVA'";
+                                cmd.ExecuteNonQuery();
+                                break;
+                            }
+                            else if (f2Name == "75kVA" && dbName == "75kVA")
+                            {
+                                eaSum = dbEa + f2Ea;
+                                priceSum = eaSum * 750000;
+                                cmd.CommandText = $"UPDATE PRODUCT_SALE SET SALESQUANTITY = {eaSum},SALESPRICE = {priceSum} WHERE PNAME = '75kVA'";
+                                cmd.ExecuteNonQuery();
+                                break;
+                            }
+                            else if (f2Name == "100kVA" && dbName == "100kVA")
+                            {
+                                eaSum = dbEa + f2Ea;
+                                priceSum = eaSum * 1000000;
+                                cmd.CommandText = $"UPDATE PRODUCT_SALE SET SALESQUANTITY = {eaSum},SALESPRICE = {priceSum} WHERE PNAME = '100kVA'";
+                                cmd.ExecuteNonQuery();
+                                break;
+                            }
+                        }// end of while
+                        form2.flagF5 = 0;
+                    }// end of if
+                    adapter.Fill(dataTable);
+                    dataGridView1.DataSource = dataTable;
+                    //MessageBox.Show("폼 로드 및 using문 실행됨");
+                    conn.Close(); //원래 없었음
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"에러: {ex.Message}");
+                }
+            }
+
+            //버튼 클릭 시 두 개의 차트 조회
+            using (OracleConnection conn = new OracleConnection(strConn))
+            {
+                try
+                {
+                    conn.Open();
+                    string query1 = "SELECT PNAME, SALESQUANTITY FROM PRODUCT_SALE";
+                    string query2 = "SELECT PNAME, SALESPRICE FROM PRODUCT_SALE";
+                    OracleCommand cmd1 = new OracleCommand(query1, conn);
+                    OracleCommand cmd2 = new OracleCommand(query2, conn);
+
+                    OracleDataReader dataReader1 = cmd1.ExecuteReader();
+                    OracleDataReader dataReader2 = cmd2.ExecuteReader();
+
+                    chart1.Series["SALESQUANTITY"].Points.DataBind(dataReader1, "PNAME", "SALESQUANTITY", "Tooltip=SALESQUANTITY");
+                    chart1.Series["SALESPRICE"].Points.DataBind(dataReader2, "PNAME", "SALESPRICE", "Tooltip=SALESPRICE");
+                    //MessageBox.Show("버튼 실행 및 using문 실행됨");
+
+                    string query = "SELECT PCODE, PNAME, PPRICE, SALESQUANTITY, SALESPRICE FROM PRODUCT_SALE";
+                    OracleDataAdapter adapter = new OracleDataAdapter(query, conn);
+                    DataTable dataTable = new DataTable();
+
+                    adapter.Fill(dataTable);
+                    dataGridView1.DataSource = dataTable;
+                    conn.Close(); //원래 없었음
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"에러: {ex.Message}");
+                }
+            }
+        }
+        private void Form5_Load(object sender, EventArgs e)
+        {
+            //차트 속성
+            Title title = new Title();
+            chart1.Titles.Add(title);
+            title.Text = "판매통계";
+            title.Font = new Font("맑은고딕", 12, FontStyle.Bold);
+
+            chart1.ForeColor = Color.White;
+            chart1.BorderlineColor = Color.AliceBlue;
+            chart1.BackColor = Color.Transparent;
+
+
+            if (chart1.Titles.Count > 0)
+            {
+                chart1.Titles[0].ForeColor = Color.White;
+            }
+
+            // X축과 Y축의 라벨 색상 설정
+            chart1.ChartAreas[0].AxisX.LabelStyle.ForeColor = Color.White;
+            chart1.ChartAreas[0].AxisY.LabelStyle.ForeColor = Color.White;
+            chart1.ChartAreas[1].AxisX.LabelStyle.ForeColor = Color.White;
+            chart1.ChartAreas[1].AxisY.LabelStyle.ForeColor = Color.White;
+
+            // X축과 Y축의 제목 색상 설정
+            chart1.ChartAreas[0].AxisX.TitleForeColor = Color.White;
+            chart1.ChartAreas[0].AxisY.TitleForeColor = Color.White;
+            chart1.ChartAreas[1].AxisX.TitleForeColor = Color.White;
+            chart1.ChartAreas[1].AxisY.TitleForeColor = Color.White;
+
+            // X축과 Y축의 선 색상 설정
+            chart1.ChartAreas[0].AxisX.LineColor = Color.White;
+            chart1.ChartAreas[0].AxisY.LineColor = Color.White;
+            chart1.ChartAreas[1].AxisX.LineColor = Color.White;
+            chart1.ChartAreas[1].AxisY.LineColor = Color.White;
+
+            if (chart1.Legends.Count > 0)
+            {
+                chart1.Legends[0].BackColor = Color.Black; // 범례의 배경을 검정색으로 설정
+                chart1.Legends[0].ForeColor = Color.White; // 범례의 글자색을 흰색으로 설정
+            }
+
+            //gridview HeaderColor
+            dataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.Black;
+            dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dataGridView1.RowHeadersDefaultCellStyle.BackColor = Color.Black;
+            dataGridView1.RowHeadersDefaultCellStyle.ForeColor = Color.White;
+
+
+        }
+
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Dbmssale();
+        }
+
+        private void button1_MouseMove(object sender, MouseEventArgs e)
+        {
+            button1.ForeColor = Color.Yellow;
+        }
+
+        private void button1_MouseLeave(object sender, EventArgs e)
+        {
+            button1.ForeColor = Color.White;
+        }
+    }
+}
