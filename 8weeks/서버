@@ -1,0 +1,43 @@
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
+
+namespace SimpleTCPServer01
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            //TCPListener 클래스를 이용해서 작업 --서버 만들기 (단순한 작업에 용이함)
+            //1. Server 만들고 Binding
+            //1-1 IP 만들기
+            IPAddress localAddr = IPAddress.Parse("127.0.0.1");
+            //1-2 Port 만들기
+            int port = 13000;
+            
+            TcpListener server = new TcpListener(localAddr, port);
+            Console.WriteLine("연결을 기다리는중....");
+            server.Start(); // 서버 시작
+            //2. Listener, Accepting
+            //TcpClient client = server.AcceptTcpClient();
+            //client.Close(); 닫아야하는데 까먹을거같으니 using 씀
+            using (TcpClient client = server.AcceptTcpClient())
+            {
+                Console.WriteLine("연결 성공");
+                //3. Write (전달하고 받을지? 받고 전달할지 정해야 함!!) (서버 --> 클라이언트 메시지 전달)
+                using (NetworkStream stream = client.GetStream())
+                {
+                    string message = "안녕하세요";
+                    byte[] data = Encoding.UTF8.GetBytes(message);  //한글일 경우 통일을 해줘야해서 UTF8으로 바이너리 파일을 만듦
+
+                    stream.Write(data, 0, data.Length); //네트워크를 통해 클라이언트로 메시지 전송
+                    Console.WriteLine($"전달한 메세지 : {message}");
+                }
+            }
+
+            //3. Accept
+            //4. Write
+            //5. 종료
+        }
+    }
+}
