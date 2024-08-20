@@ -1,0 +1,55 @@
+using System.Net;
+using System.Net.Sockets;
+using System.Runtime.Intrinsics.X86;
+using System.Text;
+
+namespace MultiThreadSurver01
+{
+    internal class Program
+    {
+        static int cnt = 0;
+        static void Main(string[] args)
+        {
+            Thread serverThread = new Thread(serverFunc);
+            serverThread.IsBackground = true;
+            serverThread.Start();
+            serverThread.Join();
+            Console.WriteLine("서버 프로그램을 종료합니다.");
+        }
+        private static void serverFunc(object obj)
+        {
+            using (Socket srvSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
+            {
+                IPEndPoint endPoint = new IPEndPoint(IPAddress.Any, 13000);
+                srvSocket.Bind(endPoint);
+                srvSocket.Listen(50);
+                Thread.Sleep(1000);
+                Console.WriteLine("서버 시작...");
+                while(true)
+                {
+                    Socket clieSocket = srvSocket.Accept();
+                    cnt++;
+
+                    Thread workThread = new Thread(new ParameterizedThreadStart(workFunc));
+                    workThread.IsBackground = true;
+
+                    workThread.Start(clieSocket);
+                }
+            }
+            
+        }
+        private static void workFunc(object obj)
+        {
+            byte[] recvBytes = new byte[1024];
+            Socket cliSocket = (Socket)obj;
+            int nRecv = cliSocket.Receive(recvBytes);
+
+            string txt = Encoding.UTF8.GetString(recvBytes, 0, nRecv);
+            Console.WriteLine($"클라이언트 번호 ({cnt}) : {txt}");
+            byte[] sendBytes = Encoding.UTF8.GetBytes("Hello : " + txt);
+            cliSocket.Send(sendBytes);
+            cliSocket.Close();
+        }
+
+    }
+}
