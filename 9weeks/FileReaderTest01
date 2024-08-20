@@ -1,0 +1,27 @@
+namespace FileReaderTest01
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            string path = @"C:\Temp\pic1.png";
+            byte[] picture;
+            using(FileStream fs = new FileStream(path, FileMode.Open))
+            {
+                BinaryReader br = new BinaryReader(fs);
+                picture = br.ReadBytes((int)fs.Length); //직렬화되어있는 값으로 읽어옴
+                br.Close();
+            }//사진 파일 읽어오기 ---> 메모리로 가져왔으면 (byte[] picture)
+
+            //pic2.png로 Write 해보기
+            string path2 = @"C:\Temp\pic2.png";
+            using (FileStream fs = new FileStream(path2, FileMode.Create))
+            {
+                BinaryWriter bw = new BinaryWriter(fs);
+                bw.Write(picture);
+                bw.Flush();
+                bw.Close();
+            }
+        }
+    }
+}
