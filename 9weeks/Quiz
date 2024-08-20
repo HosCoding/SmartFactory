@@ -1,0 +1,24 @@
+using System.Text;
+
+namespace Quiz0819
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            string path = @"C:\Temp\abc.txt";
+            StreamReader sr = new StreamReader(path, Encoding.UTF8); //Encoding.UTF8 --> 글이 깨지지않게 변환
+            string txt = sr.ReadToEnd();
+
+            //MemoryStream
+            MemoryStream ms = new MemoryStream();
+            byte[] strBytes = Encoding.UTF8.GetBytes(txt); //문자열 직렬화 - byte 배열로 만듦
+            ms.Write(strBytes, 0, strBytes.Length); 
+            ms.Position = 0;
+
+            StreamReader sr2 = new StreamReader(ms, Encoding.UTF8, true);
+            txt = sr2.ReadToEnd();
+            Console.WriteLine(txt);
+        }
+    }
+}
