@@ -1,0 +1,125 @@
+using System.Net.Sockets;
+using System.Net;
+using System.Text;
+
+namespace EchoServer01
+{
+    internal class Program
+    {
+        static int cnt = 0;
+        static void Main(string[] args)
+        {
+            Thread serverThread = new Thread(serverFunc);
+            serverThread.IsBackground = true;
+            serverThread.Start();
+            serverThread.Join();
+            Console.WriteLine("서버 프로그램을 종료합니다!!");
+        }
+
+        private static void serverFunc(object obj)
+        {
+            using (Socket srvSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
+            {
+                IPEndPoint server = new IPEndPoint(IPAddress.Any, 13000);
+                srvSocket.Bind(server);
+                srvSocket.Listen(50);
+                Console.WriteLine("서버 시작...");
+                while (true)
+                {
+                    Socket clieSocket = srvSocket.Accept();
+                    Thread workThread = new Thread(new ParameterizedThreadStart(workFunc));
+                    workThread.Start(clieSocket);
+                }
+            }
+        }
+
+        private static void workFunc(object obj)
+        {
+            while (true)
+            {
+                Socket cliSocket = (Socket)obj;
+                string quiz;
+                cnt++;
+                switch (cnt)
+                {
+                    case 1:
+                        quiz = "문제 1: C#의 창시자는?\r\n\r\n1. Anders Hejlsberg\r\n\r\n2. James Gosling\r\n\r\n3. Bjarne Stroustrup\r\n\r\n정답을 입력하세요 (1, 2, 3):";
+                        byte[] sendByte1 = Encoding.UTF8.GetBytes(quiz);
+                       cliSocket.Send(sendByte1);
+                        break;
+                    case 2:
+                        quiz = "문제 2: HTTP의 기본 포트 번호는?\r\n\r\n1. 21\r\n\r\n2. 80\r\n\r\n3. 443\r\n\r\n정답을 입력하세요 (1, 2, 3):";
+                        byte[] sendByte2 = Encoding.UTF8.GetBytes(quiz);
+                        cliSocket.Send(sendByte2);
+                        break;
+                    case 3:
+                        quiz = "문제 3: OOP에서 상속을 제공하는 키워드는?\r\n\r\n1. class\r\n\r\n2. interface\r\n\r\n3. extends\r\n\r\n정답을 입력하세요 (1, 2, 3):";
+                        byte[] sendByte3 = Encoding.UTF8.GetBytes(quiz);
+                       cliSocket.Send(sendByte3);
+                        break;
+                }
+                byte[] recvBytes = new byte[2048];
+                int nRecv = cliSocket.Receive(recvBytes);
+                string txt = Encoding.UTF8.GetString(recvBytes, 0, nRecv);
+                string ox;
+                switch (cnt)
+             {
+                    case 1:
+                        if (txt == "1")
+                        {
+                            ox = "정답입니다! 다음 문제를 보려면 엔터눌러주세요!";
+                            Console.WriteLine($"{cnt}번답 {ox}");
+                            byte[] sendByte4 = Encoding.UTF8.GetBytes(ox);
+                            cliSocket.Send(sendByte4);
+                        }
+                        else
+                        {
+                            ox = "오답입니다. 다음 기회에 도전하세요.";
+                            Console.WriteLine($"{cnt}번답 {ox}");
+                            byte[] sendByte4 = Encoding.UTF8.GetBytes(ox);
+                            cliSocket.Send(sendByte4);
+                            cnt = 4;
+                        }
+                        break;
+                    case 2:
+                        if (txt == "2")
+                        {
+                            ox = "정답입니다! 다음 문제를 보려면 엔터눌러주세요!";
+                            Console.WriteLine($"{cnt}번답 {ox}");
+                            byte[] sendByte5 = Encoding.UTF8.GetBytes(ox);
+                            cliSocket.Send(sendByte5);
+                        }
+                        else
+                        {
+                            ox = "오답입니다. 다음 기회에 도전하세요.";
+                            Console.WriteLine($"{cnt}번답 {ox}");
+                            byte[] sendByte4 = Encoding.UTF8.GetBytes(ox);
+                            cliSocket.Send(sendByte4);
+                            cnt = 4;
+                        }
+                        break;
+                    case 3:
+                        if (txt == "3")
+                        {
+                            ox = "정답입니다! 다음 문제를 보려면 엔터눌러주세요!";
+                            string lastOx = "모두 맞추셨습니다!";
+                            Console.WriteLine($"{cnt}번답 {ox}");
+                            byte[] sendByte6 = Encoding.UTF8.GetBytes(lastOx);
+                            cliSocket.Send(sendByte6);
+                        }
+                        else
+                        {
+                            ox = "오답입니다. 다음 기회에 도전하세요.";
+                            Console.WriteLine($"{cnt}번답 {ox}");
+                            byte[] sendByte4 = Encoding.UTF8.GetBytes(ox);
+                            cliSocket.Send(sendByte4);
+                            cnt = 4;
+                        }
+                        break;
+                }
+                //Console.WriteLine($"클라이언트 번호 ({cnt}) : {txt}");
+                //cliSocket.Close();
+            }
+        }
+    }
+}
