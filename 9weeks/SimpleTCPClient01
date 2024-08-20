@@ -1,0 +1,37 @@
+using System.Net.Sockets;
+using System.Text;
+
+namespace SimpleTCPClient01
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            string server = "127.0.0.1";
+            int port = 13000;
+
+            TcpClient client = new TcpClient(server, port);
+
+            NetworkStream stream = client.GetStream();
+
+            string responseMessage = "ㅎㅇ.";
+            byte[] responseData2 = Encoding.UTF8.GetBytes(responseMessage);
+            stream.Write(responseData2, 0, responseData2.Length);
+            Console.WriteLine("클라이언트에게 ㅎㅇ를 전송했습니다.");
+
+            //string greet = "ㅎㅇ";
+            //byte[] message = new byte[256];
+            //message = Encoding.UTF8.GetBytes(greet);
+            //stream.Write(message, 0, message.Length);
+            //Console.WriteLine($"보낸 메세지 : {greet}");
+
+            Thread.Sleep(1000);
+            byte[] data = new byte[256];
+            int bytes = stream.Read(data, 0, data.Length);
+            string responseData = Encoding.UTF8.GetString(data, 0, bytes);
+            Console.WriteLine($"Received: {responseData}");
+
+            client.Close();
+        }
+    }
+}
