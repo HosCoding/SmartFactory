@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+   
+    <title>Sample HTML</title>
+</head>
+<body>
+    <h3> HTML 연습 </h3>
+    <p>
+        사용하고 싶은 메시지를 작성
+    </p>
+</body>
+</html>
