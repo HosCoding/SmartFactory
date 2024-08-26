@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <style>
+        p{
+            color:#555;
+            line-height: 150%;
+        }
+        #position{
+            color:red;
+            font-weight: bold;
+        }
+        #feature{
+            color: blue;
+            font-weight: bold;
+        }
+        #kind{
+            color: yellow;
+            font-style: italic;
+            text-decoration: underline;
+        }
+    </style>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <H3>다육식물</H3>
+    <p>다육 식물은 내부에 <span id="position">물을 저장</span>하고 있기 때문에 다른 식물에 비해 통통한 외관을 가지는 경우가 많다.
+        이러한 특성을 <span id="feature">다육질</span>이라고 부르는데 다육 식물은 이러한 특성 이외에도 물을 절약하기 위해 다음과 같은 다양한 특성을 가지고 있다.
+    </p>
+    <p>다육으로 된 부위에 따라 다음과 같이 <span id="kind">분류</span>할 수 있다.</p>
+</body>
+</html>
+
+---------------
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <style>
+        p{
+            color:#555;
+            line-height: 150%;
+        }
+        .position{
+            color:red;
+            font-weight: bold;
+        }
+        .feature{
+            color: blue;
+            font-weight: bold;
+        }
+        .kind{
+            color: yellow;
+            font-style: italic;
+            text-decoration: underline;
+        }
+    </style>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <H3>다육식물</H3>
+    <p>다육 식물은 내부에 <span class="position">물을 저장</span>하고 있기 때문에 다른 식물에 비해 통통한 외관을 가지는 경우가 많다.
+        이러한 특성을 <span class="feature">다육질</span>이라고 부르는데 다육 식물은 이러한 특성 이외에도 물을 절약하기 위해 다음과 같은 다양한 특성을 가지고 있다.
+    </p>
+    <p>다육으로 된 부위에 따라 다음과 같이 <span class="kind">분류</span>할 수 있다.</p>
+</body>
+</html>
