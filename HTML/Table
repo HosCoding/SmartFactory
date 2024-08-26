@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <table border="1">
+        <tr>
+        <th>번호</th>
+        <th>이름</th>
+        <th>전화번호</th>
+        </tr>
+        <tr>
+        <td>1</td>
+        <td>홍길동</td>
+        <td>010-1111-1111</td>
+        </tr>
+        <tr>
+        <td>2</td>
+        <td>이순신</td>
+        <td>010-2222-2222</td>
+        </tr>
+
+
+    </table>
+</body>
+</html>
