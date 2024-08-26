@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>비디오제어</title>
+</head>
+<body>
+    <video controls autoplay>
+        <source src="./image/movie1.mp4" type ="video/mp4">
+        <source src="./image/movie1.webm" type ="video/mp4">
+        <source src="./image/movie1.ogg" type ="video/mp4">
+    </video>
+    
+</body>
+</html>
