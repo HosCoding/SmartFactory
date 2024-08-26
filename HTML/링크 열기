@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+<body>
+    
+    <a href = "dl_dt_dd.html" target = "_blank">dd page</a> <p></p>
+    <a href = "first.html" target = "_blank">first page</a> <p></p>
+    <a href = "./temp1/first.html" target = "_blank">first page</a> <p></p>
+
+</body>
+</html>
