@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <link rel="stylesheet" type="text/css" href="./css/mystyle.css">
+    <meta charset="UTF-8">
+
+</head>
+<body>
+    
+    <form>
+        파일 첨부 : <input type ="file"> 파일 첨부 <p></p>
+        Color : <input type="color"><br>
+        DateTime-Local : <input type ="datetime-local"><br> <p></p>
+        Month : <input type="month"> <p></p>
+        Number : <input type ="number"> <p></p>
+        Time : <input type="time"> <p></p>
+        Week : <input type="week">
+    </form>
+
+</body>
+</html>
