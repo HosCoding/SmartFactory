@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <img src="./image/a.png"> <p></p>
+    <img src="./image/0.png" width="200" height="400"> <p></p>
+
+
+</body>
+</html>
