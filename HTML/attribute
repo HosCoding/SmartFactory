@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+   
+    <title>Sample HTML</title>
+</head>
+<body>
+    <a href = "http://www.naver.com" target ="_blank"> 네이버 사이트로 이동 </a><br>
+    네이버 사이트로 이동 (blank) <br>
+    <a href = "https://www.notion.so/e95af84b19e14ed9a5f68ff4f0aa8580" target="_blank"> 노션 사이트로 이동</a><br>
+    노션 사이트로 이동 <br>
+    <a href = "http://www.naver.com" target ="_parent"> 네이버 사이트로 이동 </a><br>
+    네이버 사이트로 이동 (parent) <br>
+    <a href = "http://www.naver.com" target ="_self"> 네이버 사이트로 이동 </a><br>
+    네이버 사이트로 이동 (self) <br>
+    <a href = "http://www.naver.com" target ="_top"> 네이버 사이트로 이동 </a><br>
+    네이버 사이트로 이동 (top) <br>
+</body>
+</html>
