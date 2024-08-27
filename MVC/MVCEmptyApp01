@@ -1,0 +1,23 @@
+namespace MVCEmptyApp01
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            var builder = WebApplication.CreateBuilder(args);
+            builder.Services.AddControllersWithViews();
+            var app = builder.Build();
+
+            //app.MapGet("/", () => "Main Page");
+            //app.MapGet("/greet", () => "안녕하세요");
+            //app.MapGet("/help", () => "도와주세요~!!!");
+
+            app.MapControllerRoute(
+                    name:"default",
+                    pattern:"{controller=Home}/{action=index}/{id?}"
+                );
+
+            app.Run();
+        }
+    }
+}
