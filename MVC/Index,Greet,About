@@ -1,0 +1,30 @@
+using Microsoft.AspNetCore.Mvc;
+
+namespace MapControllers.Properties
+{
+    [Route("~/")]
+    [Route("/Home")]
+    [Route("[action]")]
+    public class HomeController : Controller
+    {
+        public IActionResult Index()
+        {
+            return View();
+        }
+        public IActionResult Greet()
+        {
+            return View();
+        }
+        [Route("[action]")]
+        public IActionResult About()
+        {
+            return View();
+        }
+
+        [Route("[action]/{id ?}")]
+        public int Help(int? id)
+        {
+            return id ?? 100;
+        }
+    }
+}
