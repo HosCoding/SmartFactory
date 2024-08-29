@@ -109,5 +109,3 @@ namespace ModelDataMVC2.Controllers
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
-[출처] [2024.08.29]스마트팩토리 양성과정 43일차|작성자 honest0719
-
