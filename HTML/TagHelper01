@@ -1,0 +1,108 @@
+//HomeController.cs
+using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
+using ViewportsTest.Models;
+
+namespace ViewportsTest.Controllers
+{
+    public class HomeController : Controller
+    {
+        private readonly ILogger<HomeController> _logger;
+
+        public HomeController(ILogger<HomeController> logger)
+        {
+            _logger = logger;
+        }
+
+        public IActionResult Index()
+        {
+            List<Student> students = new List<Student>();
+            Student st1 = new Student();
+            st1.ID = 1; st1.Name = "홍길동"; st1.HP = "010-1111-1111";
+            students.Add(st1);
+            Student st2 = new Student();
+            st2.ID = 2; st2.Name = "이순신"; st2.HP = "010-2222-2222";
+            students.Add(st2);
+            Student st3 = new Student();
+            st3.ID = 3; st3.Name = "강감찬"; st3.HP = "010-3333-3333";
+            students.Add(st3);
+
+            return View(students);
+        }
+        public IActionResult About()
+        {
+            return View();
+        }
+        public IActionResult Contact()
+        {
+            return View();
+        }
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+    }
+}
+
+
+
+
+
+//Student.cs
+namespace ViewportsTest.Models
+{
+    public class Student
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public string HP { get; set; }
+    }
+}
+
+
+
+
+
+//About.cshtml
+@*@model IEnumerable<ViewportsTest.Model.Student>;*@
+
+@model IEnumerable<Student>
+
+@{
+    ViewData["Title"] = "About";
+}
+
+<h1>About</h1>
+
+
+
+
+
+//Index.cshtml
+@model IEnumerable<ViewportsTest.Models.Student>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    @{
+        foreach (var item in Model)
+        {
+                <p>@item.ID</p>
+                <p>@item.Name</p>
+                <p>@item.HP</p>
+        }
+    }
+</div>
+
+
+
+
+
+//_ViewImports.cshtml
+@using ViewportsTest
+@using ViewportsTest.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+[출처] [2024.08.29]스마트팩토리 양성과정 43일차|작성자 honest0719
