@@ -1,0 +1,161 @@
+Input.cshtml
+
+
+
+
+
+@{
+
+    ViewData["Title"] = "사칙연산";
+
+}
+
+
+
+<h1>사칙연산</h1>
+
+
+
+<form method="post">
+
+    <label>수를 입력해주세요</label> <br />
+
+    <label for="number1">숫자1 : </label>
+
+    <input type="number" id="number1" name="number1" required /><br />
+
+    <label for="number1">숫자2 : </label>
+
+    <input type="number" id="number2" name="number2" required /><br />
+
+    <input type="submit" value="계산" />
+
+</form>
+
+
+
+@if (ViewBag.data1 != null)
+
+{
+
+    <h3>덧셈: @ViewBag.data1</h3>
+
+}
+
+
+
+@if (ViewBag.data2 != null)
+
+{
+
+    <h3>뺄셈: @ViewBag.data2</h3>
+
+}
+
+
+
+@if (ViewBag.data3 != null)
+
+{
+
+    <h3>곱셈: @ViewBag.data3</h3>
+
+}
+
+
+
+@if (ViewBag.data4 != null)
+
+{
+
+    <h3>나눗셈 : @ViewBag.data4</h3>
+
+}
+
+
+
+--------------
+
+
+
+using Microsoft.AspNetCore.Mvc;
+
+using QuizPage03.Models;
+
+using System.Diagnostics;
+
+
+
+namespace QuizPage03.Controllers
+
+{
+
+    public class HomeController : Controller
+
+    {
+
+        private readonly ILogger<HomeController> _logger;
+
+
+
+        public HomeController(ILogger<HomeController> logger)
+
+        {
+
+            _logger = logger;
+
+        }
+
+
+
+        public IActionResult Index()
+
+        {
+
+            return View();
+
+        }
+
+
+
+        public IActionResult Privacy()
+
+        {
+
+            return View();
+
+        }
+
+        public IActionResult Input(int number1, int number2)
+
+        {
+
+            ViewBag.data1 = number1 + number2;
+
+            ViewBag.data2 = number1 - number2;
+
+            ViewBag.data3 = number1 * number2;
+
+            ViewBag.data4 = (double) number1 / (double)number2;
+
+
+
+            return View();
+
+        }
+
+
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+
+        public IActionResult Error()
+
+        {
+
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+
+        }
+
+    }
+
+}
