@@ -1,0 +1,130 @@
+
+@{
+    ViewData["Title"] = "Input";
+}
+
+<h1>무게 판별기</h1>
+
+
+<form method="post">
+    <label>수를 입력해주세요</label> <br />
+    <label for="number1">키 : </label>
+    <input type="number" id="number1" name="number1" required /><br />
+    <label for="number1">몸무게 : </label>
+    <input type="number" id="number2" name="number2" required /><br />
+    <label>성별(남자/여자) : </label>
+    <input type="text" id="name1" name="name1" required />
+
+    <br />
+    <input type="submit" value="계산" />
+</form>
+
+    <h3>무게: @ViewBag.data</h3>
+
+
+---------------
+
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using QuizPage05.Models;
+using System.Diagnostics;
+using System.Runtime.Intrinsics.X86;
+
+namespace QuizPage05.Controllers
+{
+    public class HomeController : Controller
+    {
+        private readonly ILogger<HomeController> _logger;
+
+        public HomeController(ILogger<HomeController> logger)
+        {
+            _logger = logger;
+        }
+
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+        public IActionResult Input(int number1, int number2, string name1)
+        {
+            double a;
+            double pibw;
+            double number3 = number1 / 100.0;
+            if (name1 == "남자")
+            {
+                a = number3 * number3 * 22;
+                pibw = (number2 / a) * 100;
+                
+
+                if (pibw < 90)
+                {
+                    ViewBag.data = "저체중";
+                }
+                else if (pibw >= 90 && pibw < 110)
+                {
+                    ViewBag.data = "정상체중";
+                }
+                else if (pibw >= 100 && pibw < 120)
+                {
+                    ViewBag.data = "과체중";
+                }
+                else if (pibw >= 120 && pibw < 130)
+                {
+                    ViewBag.data = "경도비만";
+                }
+                else if (pibw >= 130 && pibw < 160)
+                {
+                    ViewBag.data = "중정도 비만";
+                }
+                else if (pibw >= 160)
+                {
+                    ViewBag.data = "고도 비만";
+                }
+
+            }
+
+            else if(name1 == "여자") 
+            {
+                a = number3 * number3 * 21;
+                pibw = (number2 / a) * 100;
+
+                if (pibw < 90)
+                {
+                    ViewBag.data = "저체중";
+                }
+                else if (pibw >= 90 && pibw < 110)
+                {
+                    ViewBag.data = "정상체중";
+                }
+                else if (pibw >= 100 && pibw < 120)
+                {
+                    ViewBag.data = "과체중";
+                }
+                else if (pibw >= 120 && pibw < 130)
+                {
+                    ViewBag.data = "경도비만";
+                }
+                else if (pibw >= 130 && pibw < 160)
+                {
+                    ViewBag.data = "중정도 비만";
+                }
+                else if (pibw >= 160)
+                {
+                    ViewBag.data = "고도 비만";
+                }
+            }
+            return View();
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+    }
+}
