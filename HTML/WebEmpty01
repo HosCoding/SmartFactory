@@ -1,0 +1,148 @@
+//Program.cs
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddControllersWithViews();
+var app = builder.Build();
+
+app.UseStaticFiles();
+app.UseRouting();
+
+app.MapControllerRoute(
+	name: "dafault",
+	pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.Run();
+
+
+
+
+
+
+//HomeController.cs
+using Microsoft.AspNetCore.Mvc;
+
+namespace WebEmpty_ViewBag.Controllers
+{
+	public class HomeController : Controller
+	{
+		public IActionResult Index()
+		{
+			TempData["person1"] = "홍길동";
+			ViewData["person2"] = "이순신";
+
+			return View();
+		}
+
+		public IActionResult UseViewBag()
+		{
+			ViewBag.data1 = "data1";
+			ViewBag.data2 = 100;
+			ViewBag.data3 = DateTime.Now.ToShortDateString();
+
+			string[] arr = { "사과", "배", "딸기" };
+			ViewBag.data4 = arr;
+
+			ViewBag.data5 = new List<string>()
+			{
+				"축구", "야구", "농구"
+			};
+			return View();
+		}
+		public IActionResult UseTempData()
+		{
+			ViewData["data1"] = "홍길동";
+			ViewBag.data2 = "이순신";
+			TempData["data3"] = "강감찬";
+			TempData["data4"] = new List<string>()
+			{
+				"야구", "축구", "농구"
+			};
+			TempData.Keep("data3");
+			return View();
+		}
+		public IActionResult About()
+		{
+			TempData.Keep("data3");
+			return View();
+		}
+	}
+}
+
+
+
+//About.cshtml
+
+@{
+    ViewData["Title"] = "About";
+
+}
+
+<h1>About</h1>
+@ViewData["data1"]
+@TempData["data3"]
+//Index.cshtml
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+
+
+//UseTempData.cshtml
+
+@{
+    ViewData["Title"] = "UseTempData";
+}
+
+<h1>UseTempData</h1>
+
+@ViewData["data1"]<br />
+@ViewBag.data2<br />
+@TempData["data3"]<br />
+@{
+    if (TempData["data4"] != null)
+    {
+        foreach (var item in (List<string>)TempData["data4"])
+        {
+                        <h3>@item</h3>
+        }
+    }
+    else
+    {
+                <h1>No Data Found</h1>
+    }
+
+}
+
+
+
+
+
+//UseViewBag.cshtml
+@{
+    ViewData["Title"] = "UseViewBag";
+}
+
+<h1>UseViewBag</h1>
+
+@ViewBag.data1;
+<br />
+@ViewBag.data2;
+<br />
+@ViewBag.data3;
+<br />
+@{
+    foreach (var item in ViewBag.data4)
+    {
+                <h3>@item</h3>
+    }
+}
+
+@{
+    foreach (var item in ViewBag.data5) //daaata5 compile time no error check
+    {
+                <h3>@item</h3>
+    }
+}
+<br />
