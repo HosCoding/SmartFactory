@@ -1,0 +1,33 @@
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddControllersWithViews();
+
+var app = builder.Build();
+
+app.UseStaticFiles();   // 정적 파일, 절대 경로 접근 가능
+app.UseRouting();       // 사용자 라우팅
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
+});
+
+app.Run();
+@page
+<h2>두 정수를 넣어주세요.</h2>
+
+<form method="post">
+    <label for="number1">숫자 1:</label>
+    <input type="number" id="number1" name="number1" required />
+    <br />
+    <label for="number2">숫자 2:</label>
+    <input type="number" id="number2" name="number2" required />
+    <br />
+    <input type="submit" value="Calculate" />
+</form>
+
+@if (ViewBag.Result != null)
+{
+        <h3>Result: @ViewBag.Result</h3>
+}
