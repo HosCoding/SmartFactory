@@ -1,0 +1,97 @@
+//HomeController.cs
+using Microsoft.AspNetCore.Mvc;
+using ModelDataMVC.Models;
+using System.Diagnostics;
+
+namespace ModelDataMVC.Controllers
+{
+    public class HomeController : Controller
+    {
+        private readonly ILogger<HomeController> _logger;
+
+        public HomeController(ILogger<HomeController> logger)
+        {
+            _logger = logger;
+        }
+
+        public IActionResult Index()
+        {
+            var students = new List<StudentModel>
+            {
+                new StudentModel { ID = 1, Name = "홍길동", HP = "010-1111-1111", Major = "컴퓨터공학" },
+                new StudentModel { ID = 2, Name = "이순신", HP = "010-2222-2222", Major = "정보통신공학" },
+                new StudentModel { ID = 3, Name = "강감찬", HP = "010-3333-3333", Major = "기계설계공학" },
+            };
+
+            ViewData["myStudents"] = students;
+            return View();
+        }
+
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+//Index.cshtml
+@{
+    ViewData["Title"] = "Home Page";
+
+    var students = ViewData["myStudents"] as List<StudentModel>;
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+</div>
+<div>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>이름</th>
+            <th>전화번호</th>
+            <th>전공</th>
+        </tr>
+    @foreach (var s in students)
+    {
+        <tr>
+            <th>@s.ID</th>
+            <th>@s.Name</th>
+            <th>@s.HP</th>
+            <th>@s.Major</th>
+        </tr>
+    }
+    </table>
+</div>
+
+
+
+
+
+
+
+
+
+
+//Privacy.cshtml
+@{
+    ViewData["Title"] = "Privacy Policy";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>Use this page to detail your site's privacy policy.</p>
