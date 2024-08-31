@@ -1,0 +1,197 @@
+//Program.cs
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+builder.Services.AddControllersWithViews();
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Home/Error");
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
+}
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+app.UseRouting();
+
+app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.Run();
+
+
+
+
+
+
+
+
+
+
+//HomeController.cs
+using Microsoft.AspNetCore.Mvc;
+using ModelDataMVC.Models;
+using ModelDataMVC.Respository;
+using System.Diagnostics;
+
+namespace ModelDataMVC.Controllers
+{
+    public class HomeController : Controller
+    {
+        private readonly ILogger<HomeController> _logger;
+        private readonly StudentRepository _studentRepository = null;
+
+        public HomeController(ILogger<HomeController> logger)
+        {
+            _logger = logger;
+            _studentRepository = new StudentRepository();
+        }
+        public List<StudentModel> getAllStudents()
+        {
+            return _studentRepository.getAllStudents();
+        }
+        public IActionResult Index()
+        {
+            var students = new List<StudentModel>
+            {
+                new StudentModel { ID = 1, Name = "홍길동", HP = "010-1111-1111", Major = "컴퓨터공학" },
+                new StudentModel { ID = 2, Name = "이순신", HP = "010-2222-2222", Major = "정보통신공학" },
+                new StudentModel { ID = 3, Name = "강감찬", HP = "010-3333-3333", Major = "기계설계공학" },
+            };
+
+            ViewData["myStudents"] = students;
+            return View();
+        }
+
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+//ErrorViewModel.cs
+namespace ModelDataMVC.Models
+{
+    public class ErrorViewModel
+    {
+        public string? RequestId { get; set; }
+
+        public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+//StudentModel.cs
+using Microsoft.AspNetCore.Mvc;
+
+namespace ModelDataMVC.Models
+{
+    public class StudentModel
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public string HP { get; set; }
+        public string Major { get; set; }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+//IStudent.cs
+using ModelDataMVC.Models;
+
+namespace ModelDataMVC.Respository
+{
+    public interface IStudent
+    {
+        List<StudentModel> getAllStudents();
+        StudentModel getStudentById(int id);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+//StudentRepository.cs
+using ModelDataMVC.Models;
+
+namespace ModelDataMVC.Respository
+{
+    public class StudentRepository : IStudent
+    {
+        public List<StudentModel> getAllStudents()
+        {
+            return DataSource();
+        }
+
+        public StudentModel getStudentById(int id)
+        {
+            return DataSource().Where(x => x.ID == id).FirstOrDefault();
+            //var students = DataSource();
+
+            //foreach (var student in students)
+            //{
+            //    if (student.ID == id)
+            //        return student;
+            //}
+            //return null;
+        }
+
+        private List<StudentModel> DataSource()
+        {
+
+            return new List<StudentModel>
+            {
+                new StudentModel { ID = 1, Name = "홍길동", HP = "010-1111-1111", Major = "컴퓨터공학"},
+                new StudentModel { ID = 2, Name = "이순신", HP = "010-2222-2222", Major = "정보통신공학"},
+                new StudentModel { ID = 3, Name = "강감찬", HP = "010-3333-3333", Major = "기계설계"},
+            };
+        }
+
+    }
+}
