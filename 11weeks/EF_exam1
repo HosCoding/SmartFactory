@@ -1,0 +1,48 @@
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace EF_Exam1
+{
+    public class Product
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] //프라이머리 키로 잡아줌 
+        public int No { get; set; }
+
+        [MaxLength(100)]
+        public string NAME { get; set; }
+
+        [MaxLength(100)]
+        public string Zone { get; set; }
+       
+    }
+    public class PersonDbContext : DbContext
+    {
+        public DbSet<Product> Product { get; set; }
+
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer("Server = (local)\\SQLEXPRESS; " +
+                        "Database = AndongDB; " +
+                        "Trusted_Connection = True;" +
+                        "Encrypt=False");
+        }
+    }
+
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            //using (var context = new PersonDbContext())
+            //{
+            //    // 데이터베이스와 테이블 생성
+            //    //context.Database.EnsureDeleted(); //기존의 테이블이 있을경우 삭제를 단행하는데 DB자체를 지우는 명령어라 타 테이블도 삭제됩니다.
+            //    //조심해서 사용해야할 필요가 있습니다.
+            //    context.Database.EnsureCreated();   //테이블 또는 DB를 만드는 명령어인데 기존에 존재하는 파일이 있다면 아무 작업도 하지 않습니다.
+            //    Console.WriteLine("데이터베이스 테이블이 생성되었습니다.");
+            //}
+        }
+    }
+}
