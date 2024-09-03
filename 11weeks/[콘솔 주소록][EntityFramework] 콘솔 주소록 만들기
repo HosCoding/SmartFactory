@@ -1,0 +1,299 @@
+using Microsoft.EntityFrameworkCore;
+
+using System;
+
+using System.ComponentModel.DataAnnotations;
+
+using System.ComponentModel.DataAnnotations.Schema;
+
+using System.Runtime.InteropServices;
+
+
+
+namespace Quiz0903
+
+{
+
+    public class Table1()
+
+    {
+
+        [Key]
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] //프라이머리 키
+
+        public int ID { get; set; }
+
+        public string NAME { get; set; }
+
+        public string HP { get; set; }
+
+    }
+
+    public class Table1DBContext : DbContext
+
+    {
+
+        public DbSet<Table1> Table01 { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+
+        {
+
+            // 신뢰수준 연결 + 보안 X
+
+            optionsBuilder.UseSqlServer("Server = (local)\\SQLEXPRESS; " +
+
+                        "Database = AndongDb; " +
+
+                        "Trusted_Connection = True;" +
+
+                        "Encrypt=False");
+
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+
+        {
+
+            modelBuilder.Entity<Table1>()   //Primary key 지정
+
+                .HasKey(p => p.ID);
+
+
+
+            modelBuilder.Entity<Table1>()   //Varchar2(30) 30크기를 정할 때
+
+                .Property(p => p.NAME)
+
+                .HasMaxLength(30);
+
+
+
+            modelBuilder.Entity<Table1>()
+
+                .Property(p => p.HP)
+
+                .HasMaxLength(30);
+
+        }
+
+    }
+
+        internal class Program
+
+    {
+
+        static void Main(string[] args)
+
+        {
+
+            var context = new Table1DBContext();
+
+            //context.Database.EnsureDeleted();
+
+            // 삽입(Create, Insert...)
+
+            int a;
+
+            do
+
+            {
+
+                Console.WriteLine("=======================");
+
+                Console.WriteLine("1. 명함 삽입");
+
+                Console.WriteLine("2. 명함 삭제");
+
+                Console.WriteLine("3. 명함 조회");
+
+                Console.WriteLine("4. 명함 수정");
+
+                Console.WriteLine("5. 종료");
+
+                Console.WriteLine("=======================");
+
+                a = int.Parse(Console.ReadLine());
+
+                switch (a)
+
+                {
+
+                    case 1:
+
+                        Console.WriteLine("=======================");
+
+                        Console.WriteLine("이름을 입력하세요");
+
+                        Console.WriteLine("=======================");
+
+                        string name = Console.ReadLine();
+
+                        Console.WriteLine("전화번호를 입력하세요");
+
+                        Console.WriteLine("=======================");
+
+                        string hp = Console.ReadLine();
+
+                        var st = new Table1
+
+                        {
+
+                            NAME = name,
+
+                            HP = hp
+
+                        };
+
+                        context.Table01.Add(st);
+
+                        context.SaveChanges();
+
+                        Console.WriteLine("=======================");
+
+                        Console.WriteLine("데이터가 삽입되었습니다.");
+
+                        Console.WriteLine("=======================");
+
+                        break;
+
+
+
+                    case 2:
+
+                        Console.WriteLine("삭제할 전화번호를 입력하세요(010-****-****)");
+
+                        hp = Console.ReadLine();
+
+                        var stu = context.Table01
+
+                        .Where(p => p.HP == hp)
+
+                        .FirstOrDefault();
+
+
+
+                        if (stu != null)
+
+                        {
+
+                            // 레코드가 존재하면 삭제
+
+                            context.Table01.Remove(stu);
+
+                            context.SaveChanges();
+
+                            Console.WriteLine("데이터가 삭제되었습니다.");
+
+                        }
+
+                        else
+
+                        {
+
+                            Console.WriteLine("삭제할 데이터가 없습니다.");
+
+                        }
+
+                        break;
+
+                    case 3:
+
+                        var tablelist = context.Table01.ToList();
+
+                        Console.WriteLine("목록:");
+
+                        foreach (var s in tablelist)
+
+                        {
+
+                            Console.WriteLine($"ID: {s.ID}, 이름: {s.NAME}, 전화번호: {s.HP}");
+
+                        }
+
+                        break;
+
+                    case 4:
+
+                        hp = Console.ReadLine();
+
+                        var Rename = context.Table01
+
+                        .Where(p => p.HP == hp)
+
+                        .FirstOrDefault();
+
+
+
+                        if (Rename != null)
+
+                        {
+
+                            // 레코드가 존재하면 삭제
+
+                            Console.WriteLine("수정할 아이디를 입력해주세요.");
+
+                            string newname = Console.ReadLine();
+
+                            Console.WriteLine("수정할 전화번호를 입력해주세요.");
+
+                            string newHP = Console.ReadLine();
+
+                            
+
+                            // 속성 값 수정
+
+                            Rename.NAME = newname;
+
+                            Rename.HP = newHP;
+
+                            
+
+                            // 변경 사항 저장
+
+                            context.SaveChanges();
+
+                            Console.WriteLine("데이터가 수정되었습니다.");
+
+                        }
+
+                        else
+
+                        {
+
+                            Console.WriteLine("수정할 데이터가 없습니다.");
+
+                        }
+
+                        break;
+
+
+
+                    case 5:
+
+                        Console.WriteLine("종료를 선택하셨습니다.");
+
+                        break;
+
+                }
+
+
+
+            } while (a != 5);
+
+           
+
+
+
+
+
+
+
+            context.Dispose();
+
+        }
+
+    }
+
+}
