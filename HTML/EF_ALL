@@ -1,0 +1,82 @@
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
+
+namespace _20240902_EF_All
+{
+    public class Student
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ID { get; set; }
+
+        [MaxLength(30)]
+        public string Name { get; set; }
+
+        [MaxLength(30)]
+        public string HP { get; set; }
+    }
+
+    public class StudentDbContext : DbContext
+    {
+        public DbSet<Student> Students { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer("Server = (local)\\SQLEXPRESS; " +
+                        "Database = SmartFactoryDb; " +
+                        "Trusted_Connection = True;" +
+                        "Encrypt=False");
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var context = new StudentDbContext();
+
+            //context.Database.EnsureCreated();
+
+            // 삽입(Create, Insert...)
+            var st = new Student
+            {
+                Name = "홍길동",
+                HP = "010-3333-3333"
+            };
+            //context.Students.Add(st);
+            //context.SaveChanges();
+            //Console.WriteLine("데이터가 삽입되었습니다.");
+
+            st = new Student
+            {
+                Name = "강호동",
+                HP = "010-6666-6666"
+            };
+            //context.Students.Add(st);
+            //context.SaveChanges();
+            //Console.WriteLine("데이터가 삽입되었습니다.");
+
+            // 수정 (UPDATE)
+            //var s1 = context.Students.First();
+            //s1.Name = "신동엽";
+            //context.SaveChanges();
+
+            // 삭제 (DELETE)
+            var stu = context.Students.First();
+            context.Students.Remove(stu);
+            context.SaveChanges();
+
+            // 조회 (SELECT)
+            // 메모리로 가져오기 위해 .ToList 사용
+            var students = context.Students.ToList();
+            Console.WriteLine("모든 학생 목록:");
+            foreach (var s in students)
+            {
+                Console.WriteLine($"ID: {s.ID}, 이름: {s.Name}, 전화번호: {s.HP}");
+            }
+
+            context.Dispose();
+        }
+    }
+}
