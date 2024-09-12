@@ -1,0 +1,15 @@
+void setup() {
+  Serial.begin(9600);
+  analogReference(EXTERNAL);  
+}
+ 
+void loop() {
+  int sensorValue = analogRead(A0);  
+  float V = sensorValue * 3.3/1024.0; 
+  float temp = 100.0*V – 50;  
+ 
+  Serial.print(temp); 
+  Serial.println(“[℃ ]”);
+ 
+  delay(1000);
+}
