@@ -1,0 +1,43 @@
+void setup() {
+  pinMode(10,OUTPUT); //PIN10번을 출력핀으로 사용 
+
+}
+
+void loop() {
+  analogWrite(10,255); //pwm의 level을 조절 
+  delay(1000);
+  analogWrite(10,127);
+  delay(1000);
+
+}
+
+--------------
+
+int brightness = 0;
+
+void setup() {
+  pinMode(9, OUTPUT);
+
+}
+
+void loop() {
+  analogWrite(9, brightness); 
+  brightness = brightness + 5;
+  delay(50);
+
+}
+
+----------
+
+int ledPin = 9;
+
+void setup() {
+  pinMode(ledPin, OUTPUT);
+
+}
+
+void loop() {
+  int sensorValue = analogRead(A0);
+  analogWrite(ledPin, sensorValue);
+  delay(20);
+}
